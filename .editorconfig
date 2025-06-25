@@ -1,0 +1,9 @@
+root = true
+
+[*.cs]
+dotnet_style_prefer_expression_bodied_methods = true:suggestion
+
+dotnet_style_qualification_for_field = false:warning
+dotnet_style_qualification_for_property = false:warning
+
+csharp_prefer_braces = true:warning

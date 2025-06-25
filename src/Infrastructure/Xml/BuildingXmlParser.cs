@@ -1,0 +1,64 @@
+// <copyright file="BuildingXmlParser.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
+namespace SimulationApp.Infrastructure.Xml
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Xml;
+    using SimulationApp.Domain.Factories;
+    using SimulationApp.Domain.Shared;
+    using SimulationApp.Domain.Warehouses;
+
+    public static class BuildingXmlParser
+    {
+        public static List<BuildingBase> Parse(XmlNodeList simulationNodes, List<BuildingMetadata> metadataList)
+        {
+            var buildings = new List<BuildingBase>();
+
+            foreach (XmlNode node in simulationNodes)
+            {
+                foreach (XmlNode child in node.ChildNodes)
+                {
+                    if (child.Name != "usine")
+                    {
+                        continue;
+                    }
+
+                    var element = (XmlElement)child;
+
+                    string id = element.GetAttribute("id");
+                    string type = element.GetAttribute("type");
+                    int x = int.Parse(element.GetAttribute("x"));
+                    int y = int.Parse(element.GetAttribute("y"));
+
+                    var metadata = metadataList.Find(m => m.Type == type);
+
+                    if (metadata == null)
+                    {
+                        Console.WriteLine($"⚠️  No metadata found for building type: {type}");
+                        continue;
+                    }
+
+                    BuildingBase? building = type switch
+                    {
+                        // "usine-matiere"     => new RawMaterialFactory(id, x, y, metadata),
+                        // "usine-aile"        => new ProductionFactory(id, x, y, metadata),
+                        // "usine-assemblage"  => new AssemblyFactory(id, x, y, metadata),
+                        // "usine-moteur"      => new ProductionFactory(id, x, y, metadata),
+                        "entrepot" => new Warehouse(id, x, y, metadata),
+                        _ => null
+                    };
+
+                    if (building != null)
+                    {
+                        buildings.Add(building);
+                    }
+                }
+            }
+
+            return buildings;
+        }
+    }
+}
