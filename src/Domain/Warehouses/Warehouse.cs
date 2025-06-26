@@ -49,7 +49,7 @@ namespace SimulationApp.Domain.Warehouses
 
             foreach (var component in new List<Component>(this.Transport))
             {
-                component.Ship();
+                component.ExecuteRoutine();
             }
 
             this.TrySell(0);
@@ -90,13 +90,6 @@ namespace SimulationApp.Domain.Warehouses
 
                     break;
             }
-        }
-
-        /// <summary>
-        /// This building type does not initialize a factory.
-        /// </summary>
-        protected override void InitializeBuilding()
-        {
         }
 
         public override string GetStatusIcon()

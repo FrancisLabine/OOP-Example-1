@@ -40,8 +40,8 @@ namespace SimulationApp.Infrastructure.Xml
                 }
 
                 // Link them
-                // fromBuilding.SetLinkedBuilding(toBuilding);
-                // toBuilding.AddObserver(fromBuilding);
+                fromBuilding.LinkedBuilding = toBuilding;
+                toBuilding.Observers.Add(fromBuilding);
 
                 // Build visual Pathway (coordinates are usually offset to center visuals)
                 var path = new Pathway

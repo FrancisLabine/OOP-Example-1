@@ -9,6 +9,7 @@ namespace SimulationApp
     using SimulationApp.Domain.Shared;
     using SimulationApp.Domain.Warehouses;
     using SimulationApp.Infrastructure.Xml;
+    using SimulationApp.Domain.Core;
 
     public static class Program
     {
@@ -20,33 +21,11 @@ namespace SimulationApp
         {
             Console.WriteLine("Starting simulation test...");
 
-            // Step 1: Create the XML reader
-            var reader = new XmlReaderService(ConfigPath);
+            EnvironmentLoader simulationLoader = new EnvironmentLoader(new XmlReaderService(ConfigPath));
+            EnvironmentModel simulationModel = simulationLoader.Load();
+            SimulationLoop simulationLoop = new SimulationLoop(simulationModel.Buildings);
 
-            // Step 2: Load metadata
-            XmlNodeList metadataNodes = reader.GetNodesByTag("metadonnees");
-            var metadataList = MetadataXmlParser.Parse(metadataNodes);
-            Console.WriteLine($"Metadata loaded: {metadataList.Count}");
-
-            // Step 3: Load buildings
-            XmlNodeList simulationNodes = reader.GetNodesByTag("simulation");
-            var buildingList = BuildingXmlParser.Parse(simulationNodes, metadataList);
-            Console.WriteLine($"Buildings loaded: {buildingList.Count}");
-
-            // Step 4: Display a simple Warehouse for test
-            foreach (var building in buildingList)
-            {
-                if (building is Warehouse warehouse)
-                {
-                    Console.WriteLine("Warehouse created:");
-                    Console.WriteLine($"   ID: {warehouse.Id}");
-                    Console.WriteLine($"   Position: ({warehouse.PosX}, {warehouse.PosY})");
-                    Console.WriteLine($"   Metadata: Type = {warehouse.BuildingMetadata?.Type}");
-                    break;
-                }
-            }
-
-            Console.WriteLine("Test complete.");
+            // simulationLoop.RunAsync();
         }
     }
 }

@@ -43,7 +43,7 @@ namespace SimulationApp.Infrastructure.Xml
 
                     BuildingBase? building = type switch
                     {
-                        // "usine-matiere"     => new RawMaterialFactory(id, x, y, metadata),
+                        "usine-matiere" => new RawMatFactory(id, x, y, metadata),
                         // "usine-aile"        => new ProductionFactory(id, x, y, metadata),
                         // "usine-assemblage"  => new AssemblyFactory(id, x, y, metadata),
                         // "usine-moteur"      => new ProductionFactory(id, x, y, metadata),

@@ -13,11 +13,11 @@ namespace SimulationApp.Domain.Shared
     /// </summary>
     public abstract class BuildingBase : IObserver
     {
-        protected readonly List<BuildingBase> Observers = new ();
+        public readonly List<BuildingBase> Observers = new ();
 
-        protected readonly List<Component> Inventory = new ();
+        public readonly List<Component> Inventory = new ();
 
-        protected readonly List<Component> Transport = new ();
+        public readonly List<Component> Transport = new ();
 
         public int PosX { get; private set; }
 
@@ -25,7 +25,7 @@ namespace SimulationApp.Domain.Shared
 
         public string Id { get; private set; }
 
-        private BuildingBase? linkedBuilding;
+        public BuildingBase? LinkedBuilding { get; set;}
 
         public BuildingMetadata? BuildingMetadata { get; protected set; }
 
@@ -40,11 +40,6 @@ namespace SimulationApp.Domain.Shared
         /// </summary>
         public abstract void ExecuteRoutine();
 
-        /// <summary>
-        /// Initializes the building’s internal state. Called during setup.
-        /// </summary>
-        protected abstract void InitializeBuilding();
-
         public abstract void NotifyStart();
 
         public abstract void NotifyStop();
@@ -58,24 +53,14 @@ namespace SimulationApp.Domain.Shared
         /// <param name="pBuildingMetadata">Associated metadata object.</param>
         protected BuildingBase(string pId, int pPosX, int pPosY, BuildingMetadata pBuildingMetadata)
         {
-            this.Id = pId ?? throw new ArgumentNullException(nameof(pId));
-            this.PosX = pPosX;
-            this.PosY = pPosY;
-            this.BuildingMetadata = pBuildingMetadata ?? throw new ArgumentNullException(nameof(pBuildingMetadata));
+            Id = pId ?? throw new ArgumentNullException(nameof(pId));
+            PosX = pPosX;
+            PosY = pPosY;
+            BuildingMetadata = pBuildingMetadata ?? throw new ArgumentNullException(nameof(pBuildingMetadata));
         }
 
-        public BuildingBase? LinkedBuilding
-        {
-            get => this.linkedBuilding;
-            set => this.linkedBuilding = value;
-        }
+        public virtual void ReceiveComponent(Component component) => Inventory.Add(component);
 
-        public IReadOnlyList<BuildingBase> GetObservers() => this.Observers.AsReadOnly();
-
-        public IReadOnlyList<Component> GetTransport() => this.Transport.AsReadOnly();
-
-        public virtual void ReceiveComponent(Component component) => this.Inventory.Add(component);
-
-        public virtual void RemoveInTransitComponent(Component component) => this.Transport.Remove(component);
+        public virtual void RemoveInTransitComponent(Component component) => Transport.Remove(component);
     }
 }

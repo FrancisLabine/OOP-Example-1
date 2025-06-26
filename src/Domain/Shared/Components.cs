@@ -44,7 +44,7 @@ namespace SimulationApp.Domain.Shared
         /// <summary>
         /// Executes the component's routine: moves and checks for delivery.
         /// </summary>
-        public void Ship()
+        public void ExecuteRoutine()
         {
             this.Move();
             if (this.X == this.Destination.PosX && this.Y == this.Destination.PosY)
