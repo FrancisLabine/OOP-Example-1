@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<metadonnees>
+		<usine type="usine-matiere">
+			<icones>
+				<icone type="vide" path="src/Ressources/UMP0.png"/>
+				<icone type="un-tiers" path="src/Ressources/UMP33.png"/>
+				<icone type="deux-tiers" path="src/Ressources/UMP66.png"/>
+				<icone type="plein" path="src/Ressources/UMP100.png"/>
+			</icones>
+			<sortie type = "metal"/>
+			<interval-production>100</interval-production>
+		</usine>
+		<usine type="entrepot">
+			<icones>
+				<icone type="vide" path="src/Ressources/E0.png"/>
+				<icone type="un-tiers" path="src/Ressources/E33.png"/>
+				<icone type="deux-tiers" path="src/Ressources/E66.png"/>
+				<icone type="plein" path="src/Ressources/E100.png"/>
+			</icones>
+			<entree type="metal" quantite="5"/>
+		</usine>
+	</metadonnees>
+
+	<simulation>
+		<usine type="usine-matiere" id="11" x="32" y="32"/> 
+		<usine type="entrepot" id="21" x="100" y="100"/>
+		<chemins>
+			<chemin de="11" vers="21" />
+		</chemins>
+	</simulation>
+
+</configuration>

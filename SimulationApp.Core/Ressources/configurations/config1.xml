@@ -1,0 +1,20 @@
+<configuration>
+  <metadonnees>
+    <usine type="entrepot">
+      <icones>
+        <icone type="vide" path="./src/Ressources/UT0_.png" />
+        <icone type="un-tiers" path="./src/Ressources/UT33_.png" />
+        <icone type="deux-tiers" path="./src/Ressources/UT66_.png" />
+        <icone type="plein" path="./src/Ressources/UT100_.png" />
+      </icones>
+      <entree type="avion" quantite="6" />
+      <sortie type="none" />
+      <interval-production>0</interval-production>
+    </usine>
+  </metadonnees>
+
+  <simulation>
+    <usine id="warehouse_1" type="entrepot" x="100" y="100" />
+  </simulation>
+
+</configuration>

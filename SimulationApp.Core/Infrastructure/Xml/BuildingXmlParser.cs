@@ -8,8 +8,8 @@ namespace SimulationApp.Core.Infrastructure.Xml
     using System.Collections.Generic;
     using System.Xml;
     using SimulationApp.Core.Domain.Shared;
-    using SimulationApp.Domain.Plants;
-    using SimulationApp.Domain.Warehouses;
+    using SimulationApp.Core.Domain.Plants;
+    using SimulationApp.Core.Domain.Warehouses;
 
     public static class BuildingXmlParser
     {

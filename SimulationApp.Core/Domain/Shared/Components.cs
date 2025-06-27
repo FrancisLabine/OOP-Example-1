@@ -5,7 +5,7 @@
 namespace SimulationApp.Core.Domain.Shared
 {
     using System;
-    using SimulationApp.Domain.Plants;
+    using SimulationApp.Core.Domain.Plants;
 
     /// <summary>
     /// A component represents an object produced and consumed by buildings.
