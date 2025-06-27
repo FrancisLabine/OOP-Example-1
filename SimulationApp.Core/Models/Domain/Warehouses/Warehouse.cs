@@ -1,24 +1,17 @@
-// <copyright file="Warehouse.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
-// </copyright>
-
-namespace SimulationApp.Core.Domain.Warehouses
-{
+namespace SimulationApp.Core.Models.Domain.Warehouses {
     using System;
     using System.Collections.Generic;
-    using SimulationApp.Core.Domain.Shared;
+    using SimulationApp.Core.Models.Domain.Shared;
 
     /// <summary>
     /// A warehouse is the final node in the production chain.
     /// It does not produce components but manages inventory and selling logic.
     /// </summary>
-    public class Warehouse : BuildingBase
-    {
-        private static readonly Random Random = new ();
+    public class Warehouse : BuildingBase {
+        private static readonly Random Random = new();
 
         public Warehouse(string id, int x, int y, BuildingMetadata metadata)
-            : base(id, x, y, metadata)
-        {
+            : base(id, x, y, metadata) {
         }
 
         /// <summary>
@@ -27,28 +20,21 @@ namespace SimulationApp.Core.Domain.Warehouses
         /// - Process components in transit
         /// - Attempt to sell items based on strategy.
         /// </summary>
-        public override void ExecuteRoutine()
-        {
+        public override void ExecuteRoutine() {
             var maxCapacity = BuildingMetadata?.InputQuantity1 ?? 0;
             var currentLoad = Inventory.Count + Transport.Count;
 
-            if (currentLoad < maxCapacity)
-            {
-                foreach (var observer in Observers)
-                {
+            if (currentLoad < maxCapacity) {
+                foreach (var observer in Observers) {
                     observer.NotifyStart();
                 }
-            }
-            else
-            {
-                foreach (var observer in Observers)
-                {
+            } else {
+                foreach (var observer in Observers) {
                     observer.NotifyStop();
                 }
             }
 
-            foreach (var component in new List<Component>(Transport))
-            {
+            foreach (var component in new List<Component>(Transport)) {
                 component.ExecuteRoutine();
             }
 
@@ -58,21 +44,16 @@ namespace SimulationApp.Core.Domain.Warehouses
         /// <summary>
         /// Warehouses don’t respond to upstream notifications.
         /// </summary>
-        public override void NotifyStart()
-        {
+        public override void NotifyStart() {
         }
 
-        public override void NotifyStop()
-        {
+        public override void NotifyStop() {
         }
 
-        private void TrySell(int strategy)
-        {
-            switch (strategy)
-            {
+        private void TrySell(int strategy) {
+            switch (strategy) {
                 case 0:
-                    if (Inventory.Count > 0 && Random.Next(400) == 26)
-                    {
+                    if (Inventory.Count > 0 && Random.Next(400) == 26) {
                         Console.WriteLine("vente");
                         Inventory.RemoveAt(0);
                     }
@@ -80,8 +61,7 @@ namespace SimulationApp.Core.Domain.Warehouses
                     break;
 
                 case 1:
-                    if (Inventory.Count > 3)
-                    {
+                    if (Inventory.Count > 3) {
                         Console.WriteLine("vente");
                         Inventory.RemoveAt(0);
                         Console.WriteLine("vente");
@@ -92,28 +72,23 @@ namespace SimulationApp.Core.Domain.Warehouses
             }
         }
 
-        public override string GetStatusIcon()
-        {
-            if (BuildingMetadata == null)
-            {
+        public override string GetStatusIcon() {
+            if (BuildingMetadata == null) {
                 return string.Empty;
             }
 
             int? capacity = BuildingMetadata.InputQuantity1;
             int count = Inventory.Count;
 
-            if (count == 0)
-            {
+            if (count == 0) {
                 return BuildingMetadata.IconEmpty;
             }
 
-            if (count <= capacity / 3)
-            {
+            if (count <= capacity / 3) {
                 return BuildingMetadata.IconLow;
             }
 
-            if (count < capacity)
-            {
+            if (count < capacity) {
                 return BuildingMetadata.IconMedium;
             }
 

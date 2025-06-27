@@ -2,13 +2,13 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
-namespace SimulationApp.Core.Domain.Core
+namespace SimulationApp.Core.Controllers
 {
     using System;
     using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
-    using SimulationApp.Core.Domain.Shared;
+    using SimulationApp.Core.Models.Domain.Shared;
 
     public class SimulationLoop
     {

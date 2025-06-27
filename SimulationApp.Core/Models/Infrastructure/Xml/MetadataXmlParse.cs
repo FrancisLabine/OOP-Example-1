@@ -2,11 +2,11 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
-namespace SimulationApp.Core.Infrastructure.Xml
+namespace SimulationApp.Core.Models.Infrastructure.Xml
 {
     using System.Collections.Generic;
     using System.Xml;
-    using SimulationApp.Core.Domain.Shared;
+    using SimulationApp.Core.Models.Domain.Shared;
 
     public static class MetadataXmlParser
     {

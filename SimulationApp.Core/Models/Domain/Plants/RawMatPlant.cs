@@ -1,7 +1,7 @@
-namespace SimulationApp.Core.Domain.Plants
+namespace SimulationApp.Core.Models.Domain.Plants
 {
     using System;
-    using SimulationApp.Core.Domain.Shared;
+    using SimulationApp.Core.Models.Domain.Shared;
 
     public class RawMatPlant : PlantBase
     {

@@ -1,7 +1,7 @@
-using SimulationApp.Core.Domain.Shared;
-
-namespace SimulationApp.Core.Domain.Plants
+namespace SimulationApp.Core.Models.Domain.Plants
 {
+    using SimulationApp.Core.Models.Domain.Shared;
+
     public abstract class PlantBase : BuildingBase
     {
         public ProductionType ProductionType { get; protected set; }

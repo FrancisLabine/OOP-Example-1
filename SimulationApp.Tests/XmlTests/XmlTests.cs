@@ -11,10 +11,11 @@ namespace SimulationApp.XmlTests
     using System.Linq;
     using System.Xml;
     using NUnit.Framework;
-    using SimulationApp.Domain.Plants;
-    using SimulationApp.Domain.Shared;
-    using SimulationApp.Domain.Warehouses;
-    using SimulationApp.Infrastructure.Xml;
+    using SimulationApp.Core.Domain.Shared;
+    using SimulationApp.Core.Infrastructure.Xml;
+    using SimulationApp.Core.Models.Domain.Plants;
+    using SimulationApp.Core.Models.Domain.Warehouses;
+    using SimulationApp.Core.Models.Infrastructure.Xml;
 
     [TestFixture]
     public class XmlTests
@@ -24,7 +25,7 @@ namespace SimulationApp.XmlTests
         [Test]
         public void ShouldLoadWarehouseFromXmlCorrectly()
         {
-            configPath = Path.Combine(AppContext.BaseDirectory, "../../../tests/XmlTests/config_WH.xml");
+            configPath = Path.Combine(AppContext.BaseDirectory, "../../../SimulationApp.Tests/XmlTests/config_WH.xml");
             // Step 1: Create the XML reader
             var reader = new XmlReaderService(configPath);
 
@@ -52,7 +53,7 @@ namespace SimulationApp.XmlTests
         [Test]
         public void ShouldLoadRawMatFactoryFromXmlCorrectly()
         {
-            configPath = Path.Combine(AppContext.BaseDirectory, "../../../tests/XmlTests/config_RawMatFac.xml");
+            configPath = Path.Combine(AppContext.BaseDirectory, "../../../SimulationApp.Tests/XmlTests/config_RawMatFac.xml");
 
             // Step 1: Create the XML reader
             var reader = new XmlReaderService(configPath);
@@ -81,7 +82,7 @@ namespace SimulationApp.XmlTests
         [Test]
         public void ShouldLoadEverything()
         {
-            configPath = Path.Combine(AppContext.BaseDirectory, "../../../tests/XmlTests/config_All.xml");
+            configPath = Path.Combine(AppContext.BaseDirectory, "../../../SimulationApp.Tests/XmlTests/config_All.xml");
 
             // Step 1: Create the XML reader
             var reader = new XmlReaderService(configPath);

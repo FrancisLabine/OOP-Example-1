@@ -6,10 +6,10 @@ namespace SimulationApp
 {
     using System;
     using System.Xml;
+    using SimulationApp.Core.Controllers;
     using SimulationApp.Core.Domain.Shared;
     using SimulationApp.Core.Domain.Warehouses;
     using SimulationApp.Core.Infrastructure.Xml;
-    using SimulationApp.Core.Domain.Core;
 
     public static class Program
     {

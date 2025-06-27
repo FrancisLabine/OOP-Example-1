@@ -2,7 +2,7 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
-namespace SimulationApp.Core.Domain.Shared
+namespace SimulationApp.Core.Models.Domain.Shared
 {
     /// <summary>
     /// Observer interface for receiving production control notifications.

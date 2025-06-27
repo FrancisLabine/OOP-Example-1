@@ -1,7 +1,7 @@
 ﻿using System;
-using SimulationApp.Core.Domain.Shared;
+using SimulationApp.Core.Models.Domain.Shared;
 
-namespace SimulationApp.Core.Domain.Plants
+namespace SimulationApp.Core.Models.Domain.Plants
 {
     internal class ProductionPlant : PlantBase
     {

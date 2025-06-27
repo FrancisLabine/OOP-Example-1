@@ -7,10 +7,11 @@ namespace SimulationApp
     using System.Linq;
     using System.Xml;
     using NUnit.Framework;
-    using SimulationApp.Domain.Plants;
-    using SimulationApp.Domain.Shared;
-    using SimulationApp.Domain.Warehouses;
-    using SimulationApp.Infrastructure.Xml;
+    using SimulationApp.Core.Infrastructure.Xml;
+    using SimulationApp.Core.Models.Domain.Plants;
+    using SimulationApp.Core.Models.Domain.Shared;
+    using SimulationApp.Core.Models.Domain.Warehouses;
+    using SimulationApp.Core.Models.Infrastructure.Xml;
 
     [TestFixture]
     public class WarehouseTests
@@ -20,7 +21,7 @@ namespace SimulationApp
         [Test]
         public void ShouldReturnWarehouseIcons()
         {
-            configPath = Path.Combine(AppContext.BaseDirectory, "../../../tests/SimulationTests/config1.xml");
+            configPath = Path.Combine(AppContext.BaseDirectory, "../../../SimulationApp.Tests/SimulationTests/config1.xml");
 
             var reader = new XmlReaderService(configPath);
 
@@ -53,7 +54,7 @@ namespace SimulationApp
         [Test]
         public void ShouldLoadRawMatFactoryFromXmlCorrectly()
         {
-            configPath = Path.Combine(AppContext.BaseDirectory, "../../../tests/SimulationTests/config2.xml");
+            configPath = Path.Combine(AppContext.BaseDirectory, "../../../SimulationApp.Tests/SimulationTests/config2.xml");
 
             // Step 1: Create the XML reader
             var reader = new XmlReaderService(configPath);
@@ -87,15 +88,10 @@ namespace SimulationApp
             var currentLoad = warehouse.Inventory.Count + warehouse.Transport.Count;
 
             warehouse.ExecuteRoutine();
-            
+
             Assert.That(factory.ProductionTime, Is.EqualTo(0), "Expected exactly 0 ProductionTime.");
             factory.ExecuteRoutine();
             Assert.That(warehouse.Transport.Count, Is.EqualTo(1), "Expected exactly 1 RawMat in transit.");
-            // var rawMat = warehouse.Transport.OfType<Component>().FirstOrDefault();
-            // rawMat.ExecuteRoutine();
-            // Assert.That(warehouse.Transport.Count, Is.EqualTo(0), "Expected exactly 0 RawMat in transit.");
-            // Assert.That(warehouse.Inventory.Count, Is.EqualTo(1), "Expected exactly 1 RawMat in inventory.");
-
         }
     }
 }

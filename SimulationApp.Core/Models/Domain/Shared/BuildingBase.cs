@@ -2,7 +2,7 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
-namespace SimulationApp.Core.Domain.Shared
+namespace SimulationApp.Core.Models.Domain.Shared
 {
     using System;
     using System.Collections.Generic;
@@ -13,11 +13,11 @@ namespace SimulationApp.Core.Domain.Shared
     /// </summary>
     public abstract class BuildingBase : IObserver
     {
-        public readonly List<BuildingBase> Observers = new ();
+        public readonly List<BuildingBase> Observers = [];
 
-        public readonly List<Component> Inventory = new ();
+        public readonly List<Component> Inventory = [];
 
-        public readonly List<Component> Transport = new ();
+        public readonly List<Component> Transport = [];
 
         public int PosX { get; private set; }
 

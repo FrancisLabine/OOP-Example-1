@@ -2,7 +2,7 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
-namespace SimulationApp.Core.Infrastructure.Xml
+namespace SimulationApp.Core.Models.Infrastructure.Xml
 {
     using System.Xml;
 
