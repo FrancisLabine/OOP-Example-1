@@ -1,19 +1,16 @@
+﻿using System;
 
-namespace SimulationApp.Domain.Factories
+using SimulationApp.Domain.Shared;
+
+namespace SimulationApp.Domain.Plants
 {
-    using System;
-    using SimulationApp.Domain.Shared;
-
-    public class RawMatFactory : FactoryBase
+    internal class ProductionPlant : PlantBase
     {
-        public new ProductionType ProductionType;
-
-        // Production time of -1 is inactive
-        public new int ProductionTime = -1;
-
-        public RawMatFactory(string pId, int pPosX, int pPosY, BuildingMetadata pBuildingMetadata)
+        public ProductionPlant(string pId, int pPosX, int pPosY, BuildingMetadata pBuildingMetadata)
             : base(pId, pPosX, pPosY, pBuildingMetadata)
         {
+
+            InitializeFactory();
         }
 
         public override void Build()
@@ -24,7 +21,12 @@ namespace SimulationApp.Domain.Factories
 
         public override bool IsReadyToBuild()
         {
-            return true;
+            if (Inventory.Count >= BuildingMetadata.InputQuantity1)
+            {
+                return true;
+            }
+
+            return false;
         }
 
         protected override void InitializeFactory()
@@ -43,6 +45,11 @@ namespace SimulationApp.Domain.Factories
             {
                 Build();
                 ProductionTime = -1;
+            }
+
+            foreach (var inTransitComponent in Transport)
+            {
+                inTransitComponent.ExecuteRoutine();
             }
         }
 
@@ -70,14 +77,27 @@ namespace SimulationApp.Domain.Factories
         {
             if (ProductionTime == -1)
             {
-                ProductionTime = 0;
+                if (IsReadyToBuild())
+                {
+                    ProductionTime = 0;
+                }
+                else
+                {
+                    foreach (var obs in Observers)
+                    {
+                        obs.NotifyStart();
+                    }
+                }
             }
         }
 
         public override void NotifyStop()
         {
             ProductionTime = -1;
+            foreach (var obs in Observers)
+            {
+                obs.NotifyStop();
+            }
         }
-
     }
 }

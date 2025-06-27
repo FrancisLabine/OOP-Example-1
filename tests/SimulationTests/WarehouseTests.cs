@@ -7,7 +7,7 @@ namespace SimulationApp
     using System.Linq;
     using System.Xml;
     using NUnit.Framework;
-    using SimulationApp.Domain.Factories;
+    using SimulationApp.Domain.Plants;
     using SimulationApp.Domain.Shared;
     using SimulationApp.Domain.Warehouses;
     using SimulationApp.Infrastructure.Xml;
@@ -75,7 +75,7 @@ namespace SimulationApp
             Assert.That(paths.ToList().Count, Is.EqualTo(1), "Expected exactly 1 path.");
 
             var warehouse = buildingList.OfType<Warehouse>().FirstOrDefault();
-            var factory = buildingList.OfType<RawMatFactory>().FirstOrDefault();
+            var factory = buildingList.OfType<RawMatPlant>().FirstOrDefault();
 
             Assert.That(factory.LinkedBuilding, Is.SameAs(warehouse), "Expected Factory to be linked to Warehouse.");
             Assert.That(warehouse.Observers.ToList()[0], Is.SameAs(factory), "Expected Warehouse to observe Factory.");

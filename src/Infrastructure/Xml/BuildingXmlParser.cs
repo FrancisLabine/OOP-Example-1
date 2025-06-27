@@ -7,7 +7,7 @@ namespace SimulationApp.Infrastructure.Xml
     using System;
     using System.Collections.Generic;
     using System.Xml;
-    using SimulationApp.Domain.Factories;
+    using SimulationApp.Domain.Plants;
     using SimulationApp.Domain.Shared;
     using SimulationApp.Domain.Warehouses;
 
@@ -43,10 +43,10 @@ namespace SimulationApp.Infrastructure.Xml
 
                     BuildingBase? building = type switch
                     {
-                        "usine-matiere" => new RawMatFactory(id, x, y, metadata),
-                        // "usine-aile"        => new ProductionFactory(id, x, y, metadata),
-                        // "usine-assemblage"  => new AssemblyFactory(id, x, y, metadata),
-                        // "usine-moteur"      => new ProductionFactory(id, x, y, metadata),
+                        "usine-matiere" => new RawMatPlant(id, x, y, metadata),
+                        "usine-aile" => new ProductionPlant(id, x, y, metadata),
+                        "usine-assemblage" => new AssemblyPlant(id, x, y, metadata),
+                        "usine-moteur" => new ProductionPlant(id, x, y, metadata),
                         "entrepot" => new Warehouse(id, x, y, metadata),
                         _ => null
                     };

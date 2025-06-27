@@ -11,7 +11,7 @@ namespace SimulationApp.XmlTests
     using System.Linq;
     using System.Xml;
     using NUnit.Framework;
-    using SimulationApp.Domain.Factories;
+    using SimulationApp.Domain.Plants;
     using SimulationApp.Domain.Shared;
     using SimulationApp.Domain.Warehouses;
     using SimulationApp.Infrastructure.Xml;
@@ -68,7 +68,7 @@ namespace SimulationApp.XmlTests
             Assert.That(buildingList.Count, Is.EqualTo(2), "Expected exactly 2 building.");
 
             var warehouse = buildingList.OfType<Warehouse>().FirstOrDefault();
-            var factory = buildingList.OfType<RawMatFactory>().FirstOrDefault();
+            var factory = buildingList.OfType<RawMatPlant>().FirstOrDefault();
             Assert.That(warehouse, Is.Not.Null, "Expected a warehouse to be created.");
             Assert.That(factory, Is.Not.Null, "Expected a factory to be created.");
 
@@ -76,6 +76,33 @@ namespace SimulationApp.XmlTests
             Assert.That(warehouse.BuildingMetadata?.Type, Is.EqualTo("entrepot"));
             Assert.That(factory.Id, Is.EqualTo("11"));
             Assert.That(factory.BuildingMetadata?.Type, Is.EqualTo("usine-matiere"));
+        }
+
+        [Test]
+        public void ShouldLoadEverything()
+        {
+            configPath = Path.Combine(AppContext.BaseDirectory, "../../../tests/XmlTests/config_All.xml");
+
+            // Step 1: Create the XML reader
+            var reader = new XmlReaderService(configPath);
+
+            // Step 2: Load metadata
+            XmlNodeList metadataNodes = reader.GetNodesByTag("metadonnees");
+            var metadataList = MetadataXmlParser.Parse(metadataNodes);
+            Assert.That(metadataList.Count, Is.EqualTo(5), "Expected exactly 5 metadata entries.");
+
+            // Step 3: Load buildings
+            XmlNodeList simulationNodes = reader.GetNodesByTag("simulation");
+            var buildingList = BuildingXmlParser.Parse(simulationNodes, metadataList);
+            Assert.That(buildingList.Count, Is.EqualTo(7), "Expected exactly 7 buildings.");
+
+            // Load paths
+            var pathNodes = reader.GetNodesByTag("chemin");
+            var paths = PathXmlParser.Parse(pathNodes, buildingList);
+
+            Assert.That(paths.ToList().Count, Is.EqualTo(6), "Expected exactly 6 pathes.");
+
+
         }
     }
 }
