@@ -2,7 +2,7 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
-namespace SimulationApp.Core.Models.Domain.Shared;
+namespace SimulationApp.Core.Models.Domain.Buildings;
 
 public enum ProductionType
 {

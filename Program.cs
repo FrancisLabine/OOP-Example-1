@@ -2,14 +2,15 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
-namespace SimulationApp
-{
+namespace SimulationApp {
     using System;
     using System.Xml;
-    using SimulationApp.Core.Controllers;
     using SimulationApp.Core.Domain.Shared;
     using SimulationApp.Core.Domain.Warehouses;
     using SimulationApp.Core.Infrastructure.Xml;
+    using SimulationApp.Core.Models;
+    using SimulationApp.Core.Models.Domain;
+    using SimulationApp.Core.Models.Utils;
 
     public static class Program
     {

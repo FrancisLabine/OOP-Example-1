@@ -3,8 +3,7 @@
 // </copyright>
 
 
-namespace SimulationApp.XmlTests
-{
+namespace SimulationApp.XmlTests {
     using System;
     using System.Collections.Generic;
     using System.IO;
@@ -13,8 +12,8 @@ namespace SimulationApp.XmlTests
     using NUnit.Framework;
     using SimulationApp.Core.Domain.Shared;
     using SimulationApp.Core.Infrastructure.Xml;
-    using SimulationApp.Core.Models.Domain.Plants;
-    using SimulationApp.Core.Models.Domain.Warehouses;
+    using SimulationApp.Core.Models.Domain.Buildings.Plants;
+    using SimulationApp.Core.Models.Domain.Buildings.Warehouses;
     using SimulationApp.Core.Models.Infrastructure.Xml;
 
     [TestFixture]

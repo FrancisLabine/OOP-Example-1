@@ -2,13 +2,12 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
-namespace SimulationApp.Core.Models.Infrastructure.Xml
-{
+namespace SimulationApp.Core.Models.Infrastructure.Xml {
     using System.Collections.Generic;
     using System.Linq;
     using System.Xml;
-    using SimulationApp.Core.Models.Domain.Pathways;
-    using SimulationApp.Core.Models.Domain.Shared;
+    using SimulationApp.Core.Models.Domain.Buildings;
+    using SimulationApp.Core.Models.Domain.Buildings.Pathways;
 
     public static class PathXmlParser
     {

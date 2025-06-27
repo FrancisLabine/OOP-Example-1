@@ -2,7 +2,7 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
-namespace SimulationApp.Core.Models.Domain.Pathways
+namespace SimulationApp.Core.Models.Domain.Buildings.Pathways
 {
     /// <summary>
     /// Represents a path between two coordinate points.

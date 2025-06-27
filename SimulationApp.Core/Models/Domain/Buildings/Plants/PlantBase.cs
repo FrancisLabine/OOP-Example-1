@@ -1,6 +1,5 @@
-namespace SimulationApp.Core.Models.Domain.Plants
-{
-    using SimulationApp.Core.Models.Domain.Shared;
+namespace SimulationApp.Core.Models.Domain.Buildings.Plants {
+    using SimulationApp.Core.Models.Domain.Buildings;
 
     public abstract class PlantBase : BuildingBase
     {

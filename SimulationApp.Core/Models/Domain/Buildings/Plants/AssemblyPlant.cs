@@ -1,11 +1,11 @@
-﻿using SimulationApp.Core.Models.Domain.Shared;
+﻿using SimulationApp.Core.Models.Domain.Components;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SimulationApp.Core.Models.Domain.Plants
+namespace SimulationApp.Core.Models.Domain.Buildings.Plants
 {
     internal class AssemblyPlant : PlantBase
     {

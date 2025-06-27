@@ -1,5 +1,4 @@
-namespace SimulationApp
-{
+namespace SimulationApp {
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.Design;
@@ -8,9 +7,9 @@ namespace SimulationApp
     using System.Xml;
     using NUnit.Framework;
     using SimulationApp.Core.Infrastructure.Xml;
-    using SimulationApp.Core.Models.Domain.Plants;
-    using SimulationApp.Core.Models.Domain.Shared;
-    using SimulationApp.Core.Models.Domain.Warehouses;
+    using SimulationApp.Core.Models.Domain.Buildings;
+    using SimulationApp.Core.Models.Domain.Buildings.Plants;
+    using SimulationApp.Core.Models.Domain.Buildings.Warehouses;
     using SimulationApp.Core.Models.Infrastructure.Xml;
 
     [TestFixture]

@@ -2,8 +2,9 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
-namespace SimulationApp.Core.Models.Domain.Shared
-{
+namespace SimulationApp.Core.Models.Domain.Buildings {
+    using SimulationApp.Core.Models.Domain.Components;
+    using SimulationApp.Core.Models.Domain.Shared;
     using System;
     using System.Collections.Generic;
 

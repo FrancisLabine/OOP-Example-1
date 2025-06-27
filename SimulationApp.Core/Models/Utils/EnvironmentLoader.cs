@@ -2,8 +2,9 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
-namespace SimulationApp.Core.Controllers
+namespace SimulationApp.Core.Models.Utils
 {
+    using SimulationApp.Core.Models.Domain;
     using SimulationApp.Core.Models.Infrastructure.Xml;
 
     public class EnvironmentLoader

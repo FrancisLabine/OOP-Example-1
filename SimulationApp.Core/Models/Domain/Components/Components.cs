@@ -2,10 +2,10 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
-namespace SimulationApp.Core.Models.Domain.Shared
-{
+namespace SimulationApp.Core.Models.Domain.Components {
     using System;
     using SimulationApp.Core.Domain.Plants;
+    using SimulationApp.Core.Models.Domain.Buildings;
 
     /// <summary>
     /// A component represents an object produced and consumed by buildings.

@@ -2,11 +2,10 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
-namespace SimulationApp.Core.Controllers
-{
+namespace SimulationApp.Core.Models.Domain {
     using System.Collections.Generic;
-    using SimulationApp.Core.Models.Domain.Pathways;
-    using SimulationApp.Core.Models.Domain.Shared;
+    using SimulationApp.Core.Models.Domain.Buildings;
+    using SimulationApp.Core.Models.Domain.Buildings.Pathways;
 
     public class EnvironmentModel
     {

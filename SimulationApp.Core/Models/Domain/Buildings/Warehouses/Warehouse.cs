@@ -1,7 +1,8 @@
-namespace SimulationApp.Core.Models.Domain.Warehouses {
+namespace SimulationApp.Core.Models.Domain.Buildings.Warehouses {
     using System;
     using System.Collections.Generic;
-    using SimulationApp.Core.Models.Domain.Shared;
+    using SimulationApp.Core.Models.Domain.Buildings;
+    using SimulationApp.Core.Models.Domain.Components;
 
     /// <summary>
     /// A warehouse is the final node in the production chain.
