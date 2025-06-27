@@ -9,7 +9,7 @@ namespace SimulationApp
     using SimulationApp.Domain.Shared;
     using SimulationApp.Domain.Warehouses;
     using SimulationApp.Infrastructure.Xml;
-    using SimulationApp.Domain.Core;
+    using SimulationApp.Core.Domain.Core;
 
     public static class Program
     {
