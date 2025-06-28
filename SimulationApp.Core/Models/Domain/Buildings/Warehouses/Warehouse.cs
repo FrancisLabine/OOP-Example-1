@@ -1,8 +1,9 @@
 namespace SimulationApp.Core.Models.Domain.Buildings.Warehouses {
-    using System;
-    using System.Collections.Generic;
     using SimulationApp.Core.Models.Domain.Buildings;
     using SimulationApp.Core.Models.Domain.Components;
+    using SimulationApp.Core.Models.Domain.Shared;
+    using System;
+    using System.Collections.Generic;
 
     /// <summary>
     /// A warehouse is the final node in the production chain.
@@ -24,7 +25,7 @@ namespace SimulationApp.Core.Models.Domain.Buildings.Warehouses {
         public override void ExecuteRoutine() {
             var maxCapacity = BuildingMetadata?.InputQuantity1 ?? 0;
             var currentLoad = Inventory.Count + Transport.Count;
-
+            Console.WriteLine($"Execute Routine {Id}");
             if (currentLoad < maxCapacity) {
                 foreach (var observer in Observers) {
                     observer.NotifyStart();

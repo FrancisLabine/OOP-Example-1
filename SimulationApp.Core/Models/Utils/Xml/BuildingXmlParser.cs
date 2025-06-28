@@ -2,13 +2,13 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
-namespace SimulationApp.Core.Models.Infrastructure.Xml {
+namespace SimulationApp.Core.Models.Utils.Xml {
     using System;
     using System.Collections.Generic;
     using System.Xml;
-    using SimulationApp.Core.Domain.Plants;
-    using SimulationApp.Core.Domain.Warehouses;
     using SimulationApp.Core.Models.Domain.Buildings;
+    using SimulationApp.Core.Models.Domain.Buildings.Plants;
+    using SimulationApp.Core.Models.Domain.Buildings.Warehouses;
 
     public static class BuildingXmlParser
     {

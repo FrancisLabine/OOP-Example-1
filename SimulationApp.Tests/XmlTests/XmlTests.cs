@@ -2,28 +2,22 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
-
 namespace SimulationApp.XmlTests {
     using System;
-    using System.Collections.Generic;
     using System.IO;
     using System.Linq;
     using System.Xml;
     using NUnit.Framework;
-    using SimulationApp.Core.Domain.Shared;
-    using SimulationApp.Core.Infrastructure.Xml;
     using SimulationApp.Core.Models.Domain.Buildings.Plants;
     using SimulationApp.Core.Models.Domain.Buildings.Warehouses;
-    using SimulationApp.Core.Models.Infrastructure.Xml;
+    using SimulationApp.Core.Models.Utils.Xml;
 
     [TestFixture]
-    public class XmlTests
-    {
+    public class XmlTests {
         private string configPath;
 
         [Test]
-        public void ShouldLoadWarehouseFromXmlCorrectly()
-        {
+        public void ShouldLoadWarehouseFromXmlCorrectly() {
             configPath = Path.Combine(AppContext.BaseDirectory, "../../../SimulationApp.Tests/XmlTests/config_WH.xml");
             // Step 1: Create the XML reader
             var reader = new XmlReaderService(configPath);
@@ -50,8 +44,7 @@ namespace SimulationApp.XmlTests {
 
 
         [Test]
-        public void ShouldLoadRawMatFactoryFromXmlCorrectly()
-        {
+        public void ShouldLoadRawMatFactoryFromXmlCorrectly() {
             configPath = Path.Combine(AppContext.BaseDirectory, "../../../SimulationApp.Tests/XmlTests/config_RawMatFac.xml");
 
             // Step 1: Create the XML reader
@@ -79,8 +72,7 @@ namespace SimulationApp.XmlTests {
         }
 
         [Test]
-        public void ShouldLoadEverything()
-        {
+        public void ShouldLoadEverything() {
             configPath = Path.Combine(AppContext.BaseDirectory, "../../../SimulationApp.Tests/XmlTests/config_All.xml");
 
             // Step 1: Create the XML reader

@@ -1,16 +1,14 @@
 namespace SimulationApp {
     using System;
-    using System.Collections.Generic;
-    using System.ComponentModel.Design;
     using System.IO;
     using System.Linq;
     using System.Xml;
     using NUnit.Framework;
-    using SimulationApp.Core.Infrastructure.Xml;
     using SimulationApp.Core.Models.Domain.Buildings;
     using SimulationApp.Core.Models.Domain.Buildings.Plants;
     using SimulationApp.Core.Models.Domain.Buildings.Warehouses;
-    using SimulationApp.Core.Models.Infrastructure.Xml;
+    using SimulationApp.Core.Models.Domain.Components;
+    using SimulationApp.Core.Models.Utils.Xml;
 
     [TestFixture]
     public class WarehouseTests

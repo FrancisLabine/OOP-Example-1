@@ -1,5 +1,6 @@
 namespace SimulationApp.Core.Models.Domain.Buildings.Plants {
     using System;
+    using System.Diagnostics;
     using SimulationApp.Core.Models.Domain.Buildings;
     using SimulationApp.Core.Models.Domain.Components;
 
@@ -16,6 +17,7 @@ namespace SimulationApp.Core.Models.Domain.Buildings.Plants {
 
         public override void Build()
         {
+            Debug.WriteLine($"Building {Id} at position ({PosX}, {PosY})");
             Component comp = new (ProductionType, LinkedBuilding, this);
             LinkedBuilding.Transport.Add(comp);
         }

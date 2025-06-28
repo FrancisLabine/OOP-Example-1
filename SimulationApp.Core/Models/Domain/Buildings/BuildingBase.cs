@@ -3,17 +3,16 @@
 // </copyright>
 
 namespace SimulationApp.Core.Models.Domain.Buildings {
-    using SimulationApp.Core.Models.Domain.Components;
-    using SimulationApp.Core.Models.Domain.Shared;
     using System;
     using System.Collections.Generic;
+    using SimulationApp.Core.Models.Domain.Components;
+    using SimulationApp.Core.Models.Domain.Shared;
 
     /// <summary>
     /// Abstract base class for all types of buildings in the simulation.
     /// Implements the Observer pattern.
     /// </summary>
-    public abstract class BuildingBase : IObserver
-    {
+    public abstract class BuildingBase : IObserver {
         public readonly List<BuildingBase> Observers = [];
 
         public readonly List<Component> Inventory = [];
@@ -26,9 +25,9 @@ namespace SimulationApp.Core.Models.Domain.Buildings {
 
         public string Id { get; private set; }
 
-        public BuildingBase LinkedBuilding { get; set;}
+        public BuildingBase LinkedBuilding { get; set; }
 
-        public BuildingMetadata BuildingMetadata { get; protected set; }
+        public BuildingMetadata BuildingMetadata { get; private set; }
 
         /// <summary>
         /// Gets the icon representing the building's status.
@@ -52,8 +51,7 @@ namespace SimulationApp.Core.Models.Domain.Buildings {
         /// <param name="pPosX">X position.</param>
         /// <param name="pPosY">Y position.</param>
         /// <param name="pBuildingMetadata">Associated metadata object.</param>
-        protected BuildingBase(string pId, int pPosX, int pPosY, BuildingMetadata pBuildingMetadata)
-        {
+        protected BuildingBase(string pId, int pPosX, int pPosY, BuildingMetadata pBuildingMetadata) {
             Id = pId ?? throw new ArgumentNullException(nameof(pId));
             PosX = pPosX;
             PosY = pPosY;

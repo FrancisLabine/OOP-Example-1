@@ -1,29 +1,20 @@
-// <copyright file="EnvironmentLoader.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
-// </copyright>
-
-namespace SimulationApp.Core.Models.Utils
-{
+namespace SimulationApp.Core.Models.Utils {
     using SimulationApp.Core.Models.Domain;
-    using SimulationApp.Core.Models.Infrastructure.Xml;
+    using SimulationApp.Core.Models.Utils.Xml;
 
-    public class EnvironmentLoader
-    {
+    public class EnvironmentLoader {
         private readonly IXmlReader xmlReader;
 
-        public EnvironmentLoader(IXmlReader xmlReader)
-        {
+        public EnvironmentLoader(IXmlReader xmlReader) {
             this.xmlReader = xmlReader;
         }
 
-        public EnvironmentModel Load()
-        {
+        public EnvironmentModel Load() {
             var metadata = MetadataXmlParser.Parse(xmlReader.GetNodesByTag("metadonnees"));
             var buildings = BuildingXmlParser.Parse(xmlReader.GetNodesByTag("simulation"), metadata);
             var paths = PathXmlParser.Parse(xmlReader.GetNodesByTag("chemin"), buildings);
 
-            return new EnvironmentModel
-            {
+            return new EnvironmentModel {
                 Buildings = buildings,
                 Paths = paths,
                 Metadata = metadata,

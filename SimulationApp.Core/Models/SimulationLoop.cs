@@ -1,4 +1,4 @@
-// <copyright file="SimulationLoop.cs" company="PlaceholderCompany">
+﻿// <copyright file="SimulationLoop.cs" company="PlaceholderCompany">
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
@@ -22,18 +22,16 @@ namespace SimulationApp.Core.Models {
             this.buildings = buildings;
         }
 
-        public async Task RunAsync(CancellationToken cancellationToken)
-        {
-            while (active && !cancellationToken.IsCancellationRequested)
-            {
-                foreach (var building in buildings)
-                {
+        public async Task RunAsync(CancellationToken token) {
+            while (!token.IsCancellationRequested) {
+                // Main simulation loop
+                foreach (var building in buildings) {
                     building.ExecuteRoutine();
                 }
 
                 OnCycleCompleted?.Invoke();
 
-                await Task.Delay(delayMilliseconds, cancellationToken).ConfigureAwait(false);
+                await Task.Delay(delayMilliseconds, token).ConfigureAwait(false);
             }
         }
 

@@ -1,0 +1,13 @@
+﻿<UserControl x:Class="SimulationApp.UI.StrategyPanel"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Height="Auto">
+    <StackPanel Orientation="Horizontal">
+        <Label Content="Select Strategy:"/>
+        <ComboBox Width="200" Name="StrategyDropdown">
+            <ComboBoxItem Content="Strategy 1"/>
+            <ComboBoxItem Content="Strategy 2"/>
+        </ComboBox>
+        <Button Content="Start Simulation" Click="StartSimulation_Click"/>
+    </StackPanel>
+</UserControl>

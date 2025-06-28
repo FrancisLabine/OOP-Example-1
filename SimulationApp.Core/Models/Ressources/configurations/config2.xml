@@ -3,20 +3,20 @@
 	<metadonnees>
 		<usine type="usine-matiere">
 			<icones>
-				<icone type="vide" path="src/Ressources/UMP0.png"/>
-				<icone type="un-tiers" path="src/Ressources/UMP33.png"/>
-				<icone type="deux-tiers" path="src/Ressources/UMP66.png"/>
-				<icone type="plein" path="src/Ressources/UMP100.png"/>
+				<icone type="vide" path="SimulationApp.Core/Models/Ressources/UMP0.png"/>
+				<icone type="un-tiers" path="SimulationApp.Core/Models/Ressources/UMP33.png"/>
+				<icone type="deux-tiers" path="SimulationApp.Core/Models/Ressources/UMP66.png"/>
+				<icone type="plein" path="SimulationApp.Core/Models/Ressources/UMP100.png"/>
 			</icones>
 			<sortie type = "metal"/>
 			<interval-production>100</interval-production>
 		</usine>
 		<usine type="usine-aile">
 			<icones>
-				<icone type="vide" path="src/Ressources/UT0.png"/>
-				<icone type="un-tiers" path="src/Ressources/UT33.png"/>
-				<icone type="deux-tiers" path="src/Ressources/UT66.png"/>
-				<icone type="plein" path="src/Ressources/UT100.png"/>
+				<icone type="vide" path="SimulationApp.Core/Models/Ressources/UT0.png"/>
+				<icone type="un-tiers" path="SimulationApp.Core/Models/Ressources/UT33.png"/>
+				<icone type="deux-tiers" path="SimulationApp.Core/Models/Ressources/UT66.png"/>
+				<icone type="plein" path="SimulationApp.Core/Models/Ressources/UT100.png"/>
 			</icones>
 			<entree type="metal" quantite="2"/>
 			<sortie type="aile"/>
@@ -24,10 +24,10 @@
 		</usine>
 		<usine type="usine-moteur">
 			<icones>			
-				<icone type="vide" path="src/Ressources/UM0.png"/>
-				<icone type="un-tiers" path="src/Ressources/UM33.png"/>
-				<icone type="deux-tiers" path="src/Ressources/UM66.png"/>
-				<icone type="plein" path="src/Ressources/UM100.png"/>
+				<icone type="vide" path="SimulationApp.Core/Models/Ressources/UM0.png"/>
+				<icone type="un-tiers" path="SimulationApp.Core/Models/Ressources/UM33.png"/>
+				<icone type="deux-tiers" path="SimulationApp.Core/Models/Ressources/UM66.png"/>
+				<icone type="plein" path="SimulationApp.Core/Models/Ressources/UM100.png"/>
 			</icones>
 			<entree type="metal" quantite="4"/>
 			<sortie type="moteur"/>
@@ -35,10 +35,10 @@
 		</usine>
 		<usine type="usine-assemblage">
 			<icones>
-				<icone type="vide" path="src/Ressources/UA0.png"/>
-				<icone type="un-tiers" path="src/Ressources/UA33.png"/>
-				<icone type="deux-tiers" path="src/Ressources/UA66.png"/>
-				<icone type="plein" path="src/Ressources/UA100.png"/>
+				<icone type="vide" path="SimulationApp.Core/Models/Ressources/UA0.png"/>
+				<icone type="un-tiers" path="SimulationApp.Core/Models/Ressources/UA33.png"/>
+				<icone type="deux-tiers" path="SimulationApp.Core/Models/Ressources/UA66.png"/>
+				<icone type="plein" path="SimulationApp.Core/Models/Ressources/UA100.png"/>
 			</icones>
 			<entree type="aile" quantite="2"/>
 			<entree type="moteur" quantite="4"/>
@@ -47,12 +47,12 @@
 		</usine>
 		<usine type="entrepot">
 			<icones>
-				<icone type="vide" path="src/Ressources/E0.png"/>
-				<icone type="un-tiers" path="src/Ressources/E33.png"/>
-				<icone type="deux-tiers" path="src/Ressources/E66.png"/>
-				<icone type="plein" path="src/Ressources/E100.png"/>
+				<icone type="vide" path="SimulationApp.Core/Models/Ressources/E0.png"/>
+				<icone type="un-tiers" path="SimulationApp.Core/Models/Ressources/E33.png"/>
+				<icone type="deux-tiers" path="SimulationApp.Core/Models/Ressources/E66.png"/>
+				<icone type="plein" path="SimulationApp.Core/Models/Ressources/E100.png"/>
 			</icones>
-			<entree type="avion" capacite="5"/>
+			<entree type="avion" quantite="5"/>
 		</usine>
 	</metadonnees>
 

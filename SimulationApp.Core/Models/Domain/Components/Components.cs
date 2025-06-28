@@ -4,15 +4,13 @@
 
 namespace SimulationApp.Core.Models.Domain.Components {
     using System;
-    using SimulationApp.Core.Domain.Plants;
     using SimulationApp.Core.Models.Domain.Buildings;
 
     /// <summary>
     /// A component represents an object produced and consumed by buildings.
     /// It carries its type and moves toward its destination.
     /// </summary>
-    public class Component
-    {
+    public class Component {
         public ProductionType Type { get; }
 
         public int Speed { get; } = 1;
@@ -31,8 +29,7 @@ namespace SimulationApp.Core.Models.Domain.Components {
         /// <param name="pType">The type of the component.</param>
         /// <param name="pDestination">The building receiving the component.</param>
         /// <param name="pSource">The building that produced the component.</param>
-        public Component(ProductionType pType, BuildingBase pDestination, BuildingBase pSource)
-        {
+        public Component(ProductionType pType, BuildingBase pDestination, BuildingBase pSource) {
             Type = pType;
             Destination = pDestination ?? throw new ArgumentNullException(nameof(pDestination));
             Source = pSource ?? throw new ArgumentNullException(nameof(pSource));
@@ -44,18 +41,15 @@ namespace SimulationApp.Core.Models.Domain.Components {
         /// <summary>
         /// Executes the component's routine: moves and checks for delivery.
         /// </summary>
-        public void ExecuteRoutine()
-        {
+        public void ExecuteRoutine() {
             Move();
-            if (X == Destination.PosX && Y == Destination.PosY)
-            {
+            if (X == Destination.PosX && Y == Destination.PosY) {
                 Destination.ReceiveComponent(this);
                 Destination.RemoveInTransitComponent(this);
             }
         }
 
-        private void Move()
-        {
+        private void Move() {
             float dx = Destination.PosX - X;
             float dy = Destination.PosY - Y;
             float ratio = Math.Abs(dx) > 0.01f ? Math.Abs(dy / dx) : 1f;
@@ -65,18 +59,15 @@ namespace SimulationApp.Core.Models.Domain.Components {
         }
 
         // Keep if we want to change destination dynamically
-        public void SetDestination(BuildingBase newDestination)
-        {
+        public void SetDestination(BuildingBase newDestination) {
             Destination = newDestination ?? throw new ArgumentNullException(nameof(newDestination));
         }
 
-        public void SetSource(BuildingBase newSource)
-        {
+        public void SetSource(BuildingBase newSource) {
             Source = newSource ?? throw new ArgumentNullException(nameof(newSource));
         }
 
-        public string GetIconPath()
-        {
+        public string GetIconPath() {
             return $"./src/ressources/{Type.ToString().ToLowerInvariant()}.png";
         }
     }

@@ -2,14 +2,12 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
-namespace SimulationApp.Core.Models.Domain.Buildings
-{
+namespace SimulationApp.Core.Models.Domain.Buildings {
     /// <summary>
     /// Holds configuration and resource info for a building.
     /// Initialized from XML configuration files.
     /// </summary>
-    public class BuildingMetadata
-    {
+    public class BuildingMetadata {
         public int? Interval { get; set; }
 
         public string Input1 { get; set; }

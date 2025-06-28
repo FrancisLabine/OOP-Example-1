@@ -1,29 +1,65 @@
-﻿using SimulationApp.Core.Models;
-using SimulationApp.Core.Models.Domain;
-using SimulationApp.Core.Models.Infrastructure.Xml;
-using SimulationApp.Core.Models.Utils;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SimulationApp.Core.Controllers
+﻿namespace SimulationApp.Core.Controllers
 {
+    using SimulationApp.Core.Models;
+    using SimulationApp.Core.Models.Domain;
+    using SimulationApp.Core.Models.Utils;
+    using SimulationApp.Core.Models.Utils.Xml;
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using System.Threading;
+    using System.Threading.Tasks;
+
     public class SimulationController {
-        private readonly SimulationLoop loop;
-        private readonly EnvironmentModel model;
+        public SimulationLoop Loop { get; }
+        public EnvironmentModel Model { get; }
 
         public SimulationController(string configPath) {
             var reader = new XmlReaderService(configPath);
             var loader = new EnvironmentLoader(reader);
-            model = loader.Load();
-            loop = new SimulationLoop(model.Buildings);
+            Model = loader.Load();
+            Loop = new SimulationLoop(Model.Buildings);
         }
 
-        //public void RunCycle() => loop.RunOnce();
+        private CancellationTokenSource cts;
+        private Task? loopTask;
 
-        //public IEnumerable<string> GetStatus() =>
-        //    model.Buildings.Select(b => $"{b.Name}: {b.Inventory.Count} items");
+        public Task RunCycleAsync() {
+            if (loopTask is { IsCompleted: false }) {
+                return loopTask; // already running
+            }
+
+            cts = new CancellationTokenSource();
+            loopTask = Loop.RunAsync(cts.Token);
+
+            return Task.CompletedTask;
+        }
+
+        public event Action? OnCycleCompleted {
+            add => Loop.OnCycleCompleted += value;
+            remove => Loop.OnCycleCompleted -= value;
+        }
+
+
+        public async Task StopCycleAsync() {
+            if (cts != null) {
+                cts.Cancel();
+                try {
+                    if (loopTask != null) {
+                        await loopTask.ConfigureAwait(false); // wait for clean shutdown
+                    }
+                } catch (OperationCanceledException) {
+                    // Expected on cancel
+                } finally {
+                    cts.Dispose();
+                    cts = null;
+                    loopTask = null;
+                }
+            }
+        }
+
+        public IEnumerable<string> GetStatus() =>
+            Model.Buildings.Select(b => $"{b.Id}: {b.Inventory.Count} items");
     }
 }
