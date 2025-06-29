@@ -25,7 +25,15 @@ namespace SimulationApp.UI {
             }
 
             DrawInitialState();
-            simController.RunCycleAsync(); // fire and forget
+            try {
+                simController.RunCycleAsync(); // fire and forget
+            } catch (AggregateException ex) {
+                if (ex.InnerException is OperationCanceledException) {
+                    Debug.WriteLine("Simulation was cancelled.");
+                } else {
+                    Debug.WriteLine($"Error stopping simulation: {ex.InnerException?.Message}");
+                }
+            }
         }
 
         private void DrawInitialState() {
@@ -38,17 +46,16 @@ namespace SimulationApp.UI {
                     X2 = path.X2 + 10,
                     Y2 = path.Y2 + 3,
                     Stroke = Brushes.Black,
-                    StrokeThickness = 2
+                    StrokeThickness = 2,
                 };
                 SimulationCanvas.Children.Add(line);
             }
 
             foreach (var building in simController.Model.Buildings) {
-                // Example: drawing building image
                 var image = new Image {
                     Source = new BitmapImage(new Uri($"{Directory.GetCurrentDirectory()}/../../../" + building.GetStatusIcon().ToString(), UriKind.Absolute)),
                     Width = 32,
-                    Height = 32
+                    Height = 32,
                 };
                 Canvas.SetLeft(image, building.PosX);
                 Canvas.SetTop(image, building.PosY);
@@ -56,13 +63,11 @@ namespace SimulationApp.UI {
             }
 
             foreach (var building in simController.Model.Buildings) {
-                // Example: drawing building image
-
                 foreach (var comp in building.Transport) {
                     var image = new Image {
                         Source = new BitmapImage(new Uri($"{Directory.GetCurrentDirectory()}/../../../SimulationApp.Core/Models/Ressources/" + comp.Type.ToString().ToLower() + ".png", UriKind.Absolute)),
                         Width = 32,
-                        Height = 32
+                        Height = 32,
                     };
 
                     Canvas.SetLeft(image, comp.X);
@@ -76,43 +81,5 @@ namespace SimulationApp.UI {
         private void UpdateDrawing() {
             DrawInitialState();
         }
-
-
-
-
-        //private void DrawSampleSimulation() {
-        //    // Example: Draw two nodes connected by a line
-
-        //    string corePath = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "../../../SimulationApp.Core/Models/Ressources");
-
-        //    Image building1 = new Image {
-        //        Source = new BitmapImage(new System.Uri(System.IO.Path.Combine(corePath, "E0_.png"))),
-        //        Width = 40,
-        //        Height = 40
-        //    };
-        //    Canvas.SetLeft(building1, 100);
-        //    Canvas.SetTop(building1, 100);
-
-        //    Image building2 = new Image {
-        //        Source = new BitmapImage(new System.Uri(System.IO.Path.Combine(corePath, "UA0_.png"))),
-        //        Width = 40,
-        //        Height = 40
-        //    };
-        //    Canvas.SetLeft(building2, 300);
-        //    Canvas.SetTop(building2, 100);
-
-        //    Line path = new Line {
-        //        X1 = 120,
-        //        Y1 = 120,
-        //        X2 = 320,
-        //        Y2 = 120,
-        //        Stroke = Brushes.Black,
-        //        StrokeThickness = 2
-        //    };
-
-        //    SimulationCanvas.Children.Add(path);
-        //    SimulationCanvas.Children.Add(building1);
-        //    SimulationCanvas.Children.Add(building2);
-        //}
     }
 }

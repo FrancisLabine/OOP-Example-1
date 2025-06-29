@@ -17,7 +17,6 @@ namespace SimulationApp.Core.Models.Domain.Buildings.Plants {
 
         public override void Build()
         {
-            Debug.WriteLine($"Building {Id} at position ({PosX}, {PosY})");
             Component comp = new (ProductionType, LinkedBuilding, this);
             LinkedBuilding.Transport.Add(comp);
         }

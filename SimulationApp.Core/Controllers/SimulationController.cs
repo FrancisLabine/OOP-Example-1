@@ -26,14 +26,19 @@
         private Task? loopTask;
 
         public Task RunCycleAsync() {
-            if (loopTask is { IsCompleted: false }) {
-                return loopTask; // already running
+            try {
+                if (loopTask is { IsCompleted: false }) {
+                    return loopTask; // already running
+                }
+
+                cts = new CancellationTokenSource();
+                loopTask = Loop.RunAsync(cts.Token);
+
+                return Task.CompletedTask;
+            } catch (Exception ex) {
+                Console.WriteLine($"Error starting simulation: {ex.Message}");
+                return Task.FromException(ex);
             }
-
-            cts = new CancellationTokenSource();
-            loopTask = Loop.RunAsync(cts.Token);
-
-            return Task.CompletedTask;
         }
 
         public event Action? OnCycleCompleted {

@@ -4,6 +4,7 @@
 
 namespace SimulationApp.Core.Models.Domain.Components {
     using System;
+    using System.Diagnostics;
     using SimulationApp.Core.Models.Domain.Buildings;
 
     /// <summary>
@@ -44,8 +45,20 @@ namespace SimulationApp.Core.Models.Domain.Components {
         public void ExecuteRoutine() {
             Move();
             if (X == Destination.PosX && Y == Destination.PosY) {
-                Destination.ReceiveComponent(this);
-                Destination.RemoveInTransitComponent(this);
+                try {
+                    Component comp = new Component(Type, Destination, Source);
+                    Destination.Inventory.Add(comp);
+                    Destination.Transport.Remove(this);
+                } catch (Exception ex) {
+                    Debug.WriteLine($"ERROR during transport removal: {ex.Message}");
+                    Debug.WriteLine(ex.StackTrace);
+                }
+
+                
+                //Destination.ReceiveComponent(comp);
+                //Debug.WriteLine($"Component added to inventory");
+                //Destination.RemoveInTransitComponent(this);
+                //Debug.WriteLine($"Component removed from in transit");
             }
         }
 

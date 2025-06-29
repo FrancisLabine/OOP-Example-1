@@ -1,9 +1,6 @@
 ﻿using SimulationApp.Core.Models.Domain.Components;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SimulationApp.Core.Models.Domain.Buildings.Plants
 {
@@ -60,9 +57,8 @@ namespace SimulationApp.Core.Models.Domain.Buildings.Plants
                 ProductionTime = -1;
             }
 
-            foreach (var inTransitComponent in Transport)
-            {
-                inTransitComponent.ExecuteRoutine();
+            for (int i = 0; i < Transport.Count; i++) {
+                Transport[i].ExecuteRoutine();
             }
         }
 
@@ -73,7 +69,7 @@ namespace SimulationApp.Core.Models.Domain.Buildings.Plants
 
         public override bool IsReadyToBuild()
         {
-            bool hasTwoOfEachType = LinkedBuilding.Inventory
+            bool hasTwoOfEachType = Inventory.Count != 0 && Inventory
             .GroupBy(c => c.GetType())
             .All(g => g.Count() >= 2);
 

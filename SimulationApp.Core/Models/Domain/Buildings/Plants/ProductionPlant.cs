@@ -5,6 +5,7 @@ namespace SimulationApp.Core.Models.Domain.Buildings.Plants
 {
     internal class ProductionPlant : PlantBase
     {
+
         public ProductionPlant(string pId, int pPosX, int pPosY, BuildingMetadata pBuildingMetadata)
             : base(pId, pPosX, pPosY, pBuildingMetadata)
         {
@@ -16,6 +17,10 @@ namespace SimulationApp.Core.Models.Domain.Buildings.Plants
         {
             Component comp = new (ProductionType, LinkedBuilding, this);
             LinkedBuilding.Transport.Add(comp);
+
+            for (int i = 0; i < BuildingMetadata.InputQuantity1; i++) {
+                Inventory.RemoveAt(0);
+            }
         }
 
         public override bool IsReadyToBuild()
@@ -24,7 +29,6 @@ namespace SimulationApp.Core.Models.Domain.Buildings.Plants
             {
                 return true;
             }
-
             return false;
         }
 
@@ -45,10 +49,8 @@ namespace SimulationApp.Core.Models.Domain.Buildings.Plants
                 Build();
                 ProductionTime = -1;
             }
-
-            foreach (var inTransitComponent in Transport)
-            {
-                inTransitComponent.ExecuteRoutine();
+            for (int i = 0; i < Transport.Count; i++) {
+                Transport[i].ExecuteRoutine();
             }
         }
 

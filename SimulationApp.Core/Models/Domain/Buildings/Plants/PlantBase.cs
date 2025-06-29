@@ -1,6 +1,4 @@
 namespace SimulationApp.Core.Models.Domain.Buildings.Plants {
-    using SimulationApp.Core.Models.Domain.Buildings;
-
     public abstract class PlantBase : BuildingBase
     {
         public ProductionType ProductionType { get; protected set; }
@@ -43,6 +41,5 @@ namespace SimulationApp.Core.Models.Domain.Buildings.Plants {
         public override abstract void NotifyStart();
 
         public override abstract void NotifyStop();
-
     }
 }
