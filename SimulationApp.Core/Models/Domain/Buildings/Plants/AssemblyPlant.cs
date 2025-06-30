@@ -6,9 +6,9 @@ namespace SimulationApp.Core.Models.Domain.Buildings.Plants
 {
     internal class AssemblyPlant : PlantBase
     {
-        public ProductionType Input1 { get; private set; }
+        private ProductionType Input1 { get; set; }
 
-        public ProductionType Input2 { get; private set; }
+        private ProductionType Input2 { get; set; }
 
         public AssemblyPlant(string pId, int pPosX, int pPosY, BuildingMetadata pBuildingMetadata)
             : base(pId, pPosX, pPosY, pBuildingMetadata)
@@ -37,7 +37,9 @@ namespace SimulationApp.Core.Models.Domain.Buildings.Plants
                 {
                     if (Inventory[i].GetType() == group.Key)
                     {
+                        var item = Inventory[i];   
                         Inventory.RemoveAt(i);
+                        item = null;
                         removed++;
                     }
                 }
@@ -61,11 +63,6 @@ namespace SimulationApp.Core.Models.Domain.Buildings.Plants
                 Transport[i].ExecuteRoutine();
             }
         }
-
-        //public override string GetStatusIcon()
-        //{
-        //    throw new NotImplementedException();
-        //}
 
         public override bool IsReadyToBuild()
         {

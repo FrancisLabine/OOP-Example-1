@@ -12,9 +12,9 @@ namespace SimulationApp.Core.Models.Domain.Components {
     /// It carries its type and moves toward its destination.
     /// </summary>
     public class Component {
-        public ProductionType Type { get; }
+        public ProductionType Type { get; private set; }
 
-        public int Speed { get; } = 1;
+        public int Speed { get; private set; } = 1;
 
         public BuildingBase Destination { get; private set; }
 
@@ -53,12 +53,6 @@ namespace SimulationApp.Core.Models.Domain.Components {
                     Debug.WriteLine($"ERROR during transport removal: {ex.Message}");
                     Debug.WriteLine(ex.StackTrace);
                 }
-
-                
-                //Destination.ReceiveComponent(comp);
-                //Debug.WriteLine($"Component added to inventory");
-                //Destination.RemoveInTransitComponent(this);
-                //Debug.WriteLine($"Component removed from in transit");
             }
         }
 
@@ -69,19 +63,6 @@ namespace SimulationApp.Core.Models.Domain.Components {
 
             X += dx > 0 ? Speed : dx < 0 ? -Speed : 0;
             Y += dy > 0 ? ratio * Speed : dy < 0 ? -ratio * Speed : 0;
-        }
-
-        // Keep if we want to change destination dynamically
-        public void SetDestination(BuildingBase newDestination) {
-            Destination = newDestination ?? throw new ArgumentNullException(nameof(newDestination));
-        }
-
-        public void SetSource(BuildingBase newSource) {
-            Source = newSource ?? throw new ArgumentNullException(nameof(newSource));
-        }
-
-        public string GetIconPath() {
-            return $"./src/ressources/{Type.ToString().ToLowerInvariant()}.png";
         }
     }
 }

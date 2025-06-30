@@ -1,40 +1,39 @@
-﻿// <copyright file="SimulationLoop.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
-// </copyright>
+﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
+using SimulationApp.Core.Models.Domain;
+using System.Diagnostics;
 
 namespace SimulationApp.Core.Models {
-    using System;
-    using System.Collections.Generic;
-    using System.Threading;
-    using System.Threading.Tasks;
-    using SimulationApp.Core.Models.Domain.Buildings;
+    public class SimulationLoop {
+        public EnvironmentModel Model { get; private set; }
 
-    public class SimulationLoop
-    {
-        private readonly List<BuildingBase> buildings;
-        private readonly int delayMilliseconds = 10;
-        private bool active = true;
+        private const int DelayMillisesconds = 10;
 
         public event Action OnCycleCompleted;
 
-        public SimulationLoop(List<BuildingBase> buildings)
-        {
-            this.buildings = buildings;
+        public SimulationLoop(EnvironmentModel model) {
+            Model = model;
         }
 
         public async Task RunAsync(CancellationToken token) {
+            var cycles = 0;
             while (!token.IsCancellationRequested) {
-                // Main simulation loop
-                foreach (var building in buildings) {
+                foreach (var building in Model.Buildings) {
                     building.ExecuteRoutine();
                 }
 
                 OnCycleCompleted?.Invoke();
 
-                await Task.Delay(delayMilliseconds, token).ConfigureAwait(false);
+                await Task.Delay(DelayMillisesconds, token).ConfigureAwait(false);
+                if (cycles > 2500) {
+                    Debug.WriteLine("Garbage collection triggered after 2000 cycles.");
+                    System.GC.Collect();
+                    cycles = 0; // reset cycle count after garbage collection
+                }
+
+                cycles++;
             }
         }
-
-        public void Stop() => active = false;
     }
 }

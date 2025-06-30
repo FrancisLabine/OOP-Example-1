@@ -6,9 +6,6 @@ namespace SimulationApp.Core.Models.Domain.Buildings.Plants {
 
     public class RawMatPlant : PlantBase
     {
-        // Production time of -1 is inactive
-        public new int ProductionTime = -1;
-
         public RawMatPlant(string pId, int pPosX, int pPosY, BuildingMetadata pBuildingMetadata)
             : base(pId, pPosX, pPosY, pBuildingMetadata)
         {
@@ -44,26 +41,6 @@ namespace SimulationApp.Core.Models.Domain.Buildings.Plants {
                 ProductionTime = -1;
             }
         }
-
-        //public override string GetStatusIcon()
-        //{
-        //    if (ProductionTime == -1)
-        //    {
-        //        return BuildingMetadata.IconEmpty;
-        //    }
-        //    else if (ProductionTime <= BuildingMetadata.Interval / 3)
-        //    {
-        //        return BuildingMetadata.IconLow;
-        //    }
-        //    else if (BuildingMetadata.Interval / 3 < ProductionTime && ProductionTime <= (BuildingMetadata.Interval / 3) * 2)
-        //    {
-        //        return BuildingMetadata.IconMedium;
-        //    }
-        //    else
-        //    {
-        //        return BuildingMetadata.IconFull;
-        //    }
-        //}
 
         public override void NotifyStart()
         {

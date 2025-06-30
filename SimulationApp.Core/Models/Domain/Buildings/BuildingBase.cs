@@ -1,23 +1,19 @@
-// <copyright file="BuildingBase.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
-// </copyright>
+using System;
+using System.Collections.Generic;
+using SimulationApp.Core.Models.Domain.Components;
+using SimulationApp.Core.Models.Domain.Shared;
 
 namespace SimulationApp.Core.Models.Domain.Buildings {
-    using System;
-    using System.Collections.Generic;
-    using SimulationApp.Core.Models.Domain.Components;
-    using SimulationApp.Core.Models.Domain.Shared;
-
     /// <summary>
     /// Abstract base class for all types of buildings in the simulation.
     /// Implements the Observer pattern.
     /// </summary>
     public abstract class BuildingBase : IObserver {
-        public readonly List<BuildingBase> Observers = [];
+        public List<BuildingBase> Observers { get; private set; } = [];
 
-        public readonly List<Component> Inventory = [];
+        public List<Component> Inventory { get; private set; } = [];
 
-        public readonly List<Component> Transport = [];
+        public List<Component> Transport { get; private set; } = [];
 
         public int PosX { get; private set; }
 
@@ -29,37 +25,19 @@ namespace SimulationApp.Core.Models.Domain.Buildings {
 
         public BuildingMetadata BuildingMetadata { get; private set; }
 
-        /// <summary>
-        /// Gets the icon representing the building's status.
-        /// </summary>
-        /// <returns></returns>
         public abstract string GetStatusIcon();
 
-        /// <summary>
-        /// Executes the building's main routine logic.
-        /// </summary>
         public abstract void ExecuteRoutine();
 
         public abstract void NotifyStart();
 
         public abstract void NotifyStop();
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="BuildingBase"/> class.
-        /// </summary>
-        /// <param name="pId">The building's unique identifier.</param>
-        /// <param name="pPosX">X position.</param>
-        /// <param name="pPosY">Y position.</param>
-        /// <param name="pBuildingMetadata">Associated metadata object.</param>
         protected BuildingBase(string pId, int pPosX, int pPosY, BuildingMetadata pBuildingMetadata) {
             Id = pId ?? throw new ArgumentNullException(nameof(pId));
             PosX = pPosX;
             PosY = pPosY;
-            BuildingMetadata = pBuildingMetadata ?? throw new ArgumentNullException(nameof(pBuildingMetadata));
+            BuildingMetadata = pBuildingMetadata;
         }
-
-        public virtual void ReceiveComponent(Component component) => Inventory.Add(component);
-
-        public virtual void RemoveInTransitComponent(Component component) => Transport.Remove(component);
     }
 }

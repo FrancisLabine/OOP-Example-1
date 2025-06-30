@@ -4,9 +4,9 @@
              Height="Auto">
     <StackPanel Orientation="Horizontal">
         <Label Content="Select Strategy:"/>
-        <ComboBox Width="200" Name="StrategyDropdown">
-            <ComboBoxItem Content="Strategy 1"/>
-            <ComboBoxItem Content="Strategy 2"/>
+        <ComboBox Width="200" Name="StrategyDropdown" SelectedIndex="0">
+            <ComboBoxItem Content="Strategy Random"/>
+            <ComboBoxItem Content="Strategy Bulk"/>
         </ComboBox>
         <Button Content="Start Simulation" Click="StartSimulation_Click"/>
     </StackPanel>

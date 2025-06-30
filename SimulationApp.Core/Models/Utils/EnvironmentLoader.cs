@@ -17,7 +17,6 @@ namespace SimulationApp.Core.Models.Utils {
             return new EnvironmentModel {
                 Buildings = buildings,
                 Paths = paths,
-                Metadata = metadata,
             };
         }
     }

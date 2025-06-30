@@ -16,8 +16,6 @@ namespace SimulationApp.Core.Models.Domain.Buildings.Plants {
 
         protected abstract void InitializeFactory();
 
-        public override abstract void ExecuteRoutine();
-
         public override string GetStatusIcon()
         {
             if (ProductionTime == -1)
@@ -37,9 +35,5 @@ namespace SimulationApp.Core.Models.Domain.Buildings.Plants {
                 return BuildingMetadata.IconFull;
             }
         }
-
-        public override abstract void NotifyStart();
-
-        public override abstract void NotifyStop();
     }
 }

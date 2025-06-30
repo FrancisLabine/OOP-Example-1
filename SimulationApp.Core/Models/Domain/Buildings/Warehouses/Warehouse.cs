@@ -1,7 +1,7 @@
 namespace SimulationApp.Core.Models.Domain.Buildings.Warehouses {
     using SimulationApp.Core.Models.Domain.Buildings;
     using SimulationApp.Core.Models.Domain.Components;
-    using SimulationApp.Core.Models.Domain.Shared;
+    using SimulationApp.Core.Models.Domain.Interfaces;
     using System;
     using System.Collections.Generic;
 
@@ -10,7 +10,8 @@ namespace SimulationApp.Core.Models.Domain.Buildings.Warehouses {
     /// It does not produce components but manages inventory and selling logic.
     /// </summary>
     public class Warehouse : BuildingBase {
-        private static readonly Random Random = new();
+
+        public ISellingStrategy SellingStrategy { get; set; }
 
         public Warehouse(string id, int x, int y, BuildingMetadata metadata)
             : base(id, x, y, metadata) {
@@ -23,7 +24,7 @@ namespace SimulationApp.Core.Models.Domain.Buildings.Warehouses {
         /// - Attempt to sell items based on strategy.
         /// </summary>
         public override void ExecuteRoutine() {
-            var maxCapacity = BuildingMetadata?.InputQuantity1 ?? 0;
+            var maxCapacity = BuildingMetadata.InputQuantity1 ?? 0;
             var currentLoad = Inventory.Count + Transport.Count;
             Console.WriteLine($"Execute Routine {Id}");
             if (currentLoad < maxCapacity) {
@@ -40,7 +41,7 @@ namespace SimulationApp.Core.Models.Domain.Buildings.Warehouses {
                 component.ExecuteRoutine();
             }
 
-            TrySell(0);
+            SellingStrategy.Sell(this);
         }
 
         /// <summary>
@@ -52,30 +53,8 @@ namespace SimulationApp.Core.Models.Domain.Buildings.Warehouses {
         public override void NotifyStop() {
         }
 
-        private void TrySell(int strategy) {
-            switch (strategy) {
-                case 0:
-                    if (Inventory.Count > 0 && Random.Next(400) == 26) {
-                        Console.WriteLine("vente");
-                        Inventory.RemoveAt(0);
-                    }
-
-                    break;
-
-                case 1:
-                    if (Inventory.Count > 3) {
-                        Console.WriteLine("vente");
-                        Inventory.RemoveAt(0);
-                        Console.WriteLine("vente");
-                        Inventory.RemoveAt(0);
-                    }
-
-                    break;
-            }
-        }
-
         public override string GetStatusIcon() {
-            if (BuildingMetadata == null) {
+            if (BuildingMetadata.InputQuantity1 == null) {
                 return string.Empty;
             }
 

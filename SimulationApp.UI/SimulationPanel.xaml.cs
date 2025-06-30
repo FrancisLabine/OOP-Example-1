@@ -1,5 +1,6 @@
 ﻿using SimulationApp.Core.Controllers;
 using SimulationApp.Core.Models;
+using SimulationApp.Core.Models.Domain;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -15,31 +16,10 @@ namespace SimulationApp.UI {
             InitializeComponent();
         }
 
-        private SimulationController simController;
-        private void StartButton_Click(object sender, RoutedEventArgs e) {
-            if (simController == null) {
-                simController = new SimulationController($"{Directory.GetCurrentDirectory()}/../../../SimulationApp.Core/Models/Ressources/configurations/config2.xml");
-                simController.OnCycleCompleted += () => {
-                    Dispatcher.Invoke(UpdateDrawing); // UI-safe update
-                };
-            }
-
-            DrawInitialState();
-            try {
-                simController.RunCycleAsync(); // fire and forget
-            } catch (AggregateException ex) {
-                if (ex.InnerException is OperationCanceledException) {
-                    Debug.WriteLine("Simulation was cancelled.");
-                } else {
-                    Debug.WriteLine($"Error stopping simulation: {ex.InnerException?.Message}");
-                }
-            }
-        }
-
-        private void DrawInitialState() {
+        public void UpdateDrawing(EnvironmentModel pModel) {
             SimulationCanvas.Children.Clear();
 
-            foreach (var path in simController.Model.Paths) {
+            foreach (var path in pModel.Paths) {
                 var line = new Line {
                     X1 = path.X1 + 10,
                     Y1 = path.Y1 + 3,
@@ -51,7 +31,7 @@ namespace SimulationApp.UI {
                 SimulationCanvas.Children.Add(line);
             }
 
-            foreach (var building in simController.Model.Buildings) {
+            foreach (var building in pModel.Buildings) {
                 var image = new Image {
                     Source = new BitmapImage(new Uri($"{Directory.GetCurrentDirectory()}/../../../" + building.GetStatusIcon().ToString(), UriKind.Absolute)),
                     Width = 32,
@@ -62,7 +42,7 @@ namespace SimulationApp.UI {
                 SimulationCanvas.Children.Add(image);
             }
 
-            foreach (var building in simController.Model.Buildings) {
+            foreach (var building in pModel.Buildings) {
                 foreach (var comp in building.Transport) {
                     var image = new Image {
                         Source = new BitmapImage(new Uri($"{Directory.GetCurrentDirectory()}/../../../SimulationApp.Core/Models/Ressources/" + comp.Type.ToString().ToLower() + ".png", UriKind.Absolute)),
@@ -73,13 +53,10 @@ namespace SimulationApp.UI {
                     Canvas.SetLeft(image, comp.X);
                     Canvas.SetTop(image, comp.Y);
                     SimulationCanvas.Children.Add(image);
-                };
+                }
+                ;
 
             }
-        }
-
-        private void UpdateDrawing() {
-            DrawInitialState();
         }
     }
 }

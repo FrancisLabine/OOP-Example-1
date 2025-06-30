@@ -19,7 +19,9 @@ namespace SimulationApp.Core.Models.Domain.Buildings.Plants
             LinkedBuilding.Transport.Add(comp);
 
             for (int i = 0; i < BuildingMetadata.InputQuantity1; i++) {
+                var item = Inventory[0];
                 Inventory.RemoveAt(0);
+                item = null;
             }
         }
 

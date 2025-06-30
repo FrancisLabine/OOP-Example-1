@@ -11,9 +11,6 @@
             <!-- Row for canvas -->
         </Grid.RowDefinitions>
 
-        <!-- Only keep the Start button -->
-        <Button Content="Start" Grid.Row="0" Margin="5" Click="StartButton_Click"/>
-
         <!-- Canvas where simulation will be drawn -->
         <Canvas x:Name="SimulationCanvas" Grid.Row="1" Background="White"/>
     </Grid>

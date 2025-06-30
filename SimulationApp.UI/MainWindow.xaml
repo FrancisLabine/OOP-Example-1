@@ -21,8 +21,8 @@
                 <!-- Simulation Panel -->
             </Grid.RowDefinitions>
 
-            <local:StrategyPanel Grid.Row="0" Margin="10"/>
-            <local:SimulationPanel Grid.Row="1"/>
+            <local:StrategyPanel x:Name="StrategyPanelControl" Grid.Row="0" Margin="10"/>
+            <local:SimulationPanel x:Name="SimulationPanelControl" Grid.Row="1"/>
         </Grid>
     </DockPanel>
 </Window>
