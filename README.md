@@ -28,6 +28,7 @@ Each building has its own responsibilities and behavior, and the system uses pol
 - **Low Coupling**: Classes interact through well-defined interfaces, reducing dependencies and making the system more modular.
 
 ### Design Patterns
+- **Template Method Pattern**: Used in buildings to define a skeleton of the production process, allowing subclasses to implement specific steps.
 - **Factory Pattern**: Used to create different types of buildings and components dynamically.
 - **Observer Pattern**: Buildings can observe changes in production and react accordingly.
 - **Strategy Pattern**: Warehouses can use different selling strategies to manage how they sell components.
@@ -49,6 +50,11 @@ Each building has its own responsibilities and behavior, and the system uses pol
 ### Strategies
 - **ISellingStrategy**: Interface for implementing different selling strategies (e.g., **BulkStrategy**, **RandomStrategy**).
 - Promotes open/closed principle by allowing warehouses to behave differently based on strategy.
+
+### Architectural Patterns
+- **Layered Architecture**: The system is organized into layers (e.g., data layer, business logic layer) to separate concerns.
+- **Event-Driven Architecture**: Buildings can react to events in the system, allowing for dynamic interactions.
+- **MVVM (Model-View-ViewModel)**: The simulation can be extended to use MVVM for UI interactions, separating the view logic from the business logic.
 
 ### Documentation
  All UML diagrams and architecture decisions are in the [Doc](https://github.com/FrancisLabine/OOP-Example-1/tree/main/Doc) folder.
