@@ -1,33 +1,15 @@
-// <copyright file="BuildingMetada.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
-// </copyright>
-
 namespace SimulationApp.Core.Models.Domain.Buildings {
-    /// <summary>
-    /// Holds configuration and resource info for a building.
-    /// Initialized from XML configuration files.
-    /// </summary>
-    public class BuildingMetadata {
-        public int? Interval { get; set; }
-
-        public string Input1 { get; set; }
-
-        public string Input2 { get; set; }
-
-        public string Output { get; set; }
-
-        public int? InputQuantity1 { get; set; }
-
-        public int? InputQuantity2 { get; set; }
-
-        public string Type { get; set; }
-
-        public string IconEmpty { get; set; }
-
-        public string IconLow { get; set; }
-
-        public string IconMedium { get; set; }
-
-        public string IconFull { get; set; }
+    public record BuildingMetadata {
+        public int? Interval { get; init; }
+        public string Input1 { get; init; }
+        public string Input2 { get; init; }
+        public string Output { get; init; }
+        public int? InputQuantity1 { get; init; }
+        public int? InputQuantity2 { get; init; }
+        public string Type { get; init; }
+        public string IconEmpty { get; init; }
+        public string IconLow { get; init; }
+        public string IconMedium { get; init; }
+        public string IconFull { get; init; }
     }
 }
