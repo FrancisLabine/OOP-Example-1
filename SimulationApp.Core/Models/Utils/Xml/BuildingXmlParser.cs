@@ -1,15 +1,9 @@
-// <copyright file="BuildingXmlParser.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
-// </copyright>
+using System;
+using System.Collections.Generic;
+using System.Xml;
+using SimulationApp.Core.Models.Domain.Buildings;
 
 namespace SimulationApp.Core.Models.Utils.Xml {
-    using System;
-    using System.Collections.Generic;
-    using System.Xml;
-    using SimulationApp.Core.Models.Domain.Buildings;
-    using SimulationApp.Core.Models.Domain.Buildings.Plants;
-    using SimulationApp.Core.Models.Domain.Buildings.Warehouses;
-
     public static class BuildingXmlParser
     {
         public static List<BuildingBase> Parse(XmlNodeList simulationNodes, List<BuildingMetadata> metadataList)
@@ -36,22 +30,12 @@ namespace SimulationApp.Core.Models.Utils.Xml {
 
                     if (metadata == null)
                     {
-                        Console.WriteLine($"⚠️  No metadata found for building type: {type}");
+                        Console.WriteLine($"No metadata found for building type: {type}");
                         continue;
                     }
 
-                    BuildingBase building = type switch
-                    {
-                        "usine-matiere" => new RawMatPlant(id, x, y, metadata),
-                        "usine-aile" => new ProductionPlant(id, x, y, metadata),
-                        "usine-assemblage" => new AssemblyPlant(id, x, y, metadata),
-                        "usine-moteur" => new ProductionPlant(id, x, y, metadata),
-                        "entrepot" => new Warehouse(id, x, y, metadata),
-                        _ => null
-                    };
-
-                    if (building != null)
-                    {
+                    var building = BuildingFactory.CreateBuilding(type, id, x, y, metadata);
+                    if (building is not null) {
                         buildings.Add(building);
                     }
                 }
