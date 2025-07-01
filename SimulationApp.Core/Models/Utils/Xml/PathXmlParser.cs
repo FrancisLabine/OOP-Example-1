@@ -1,14 +1,10 @@
-// <copyright file="PathXmlParser.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
-// </copyright>
+using System.Collections.Generic;
+using System.Linq;
+using System.Xml;
+using SimulationApp.Core.Models.Domain.Buildings;
+using SimulationApp.Core.Models.Domain.Buildings.Pathways;
 
 namespace SimulationApp.Core.Models.Utils.Xml {
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Xml;
-    using SimulationApp.Core.Models.Domain.Buildings;
-    using SimulationApp.Core.Models.Domain.Buildings.Pathways;
-
     public static class PathXmlParser
     {
         public static List<Pathway> Parse(XmlNodeList pathNodes, List<BuildingBase> buildings)
@@ -38,11 +34,9 @@ namespace SimulationApp.Core.Models.Utils.Xml {
                     continue;
                 }
 
-                // Link them
                 fromBuilding.LinkedBuilding = toBuilding;
                 toBuilding.Observers.Add(fromBuilding);
 
-                // Build visual Pathway (coordinates are usually offset to center visuals)
                 var path = new Pathway
                 {
                     X1 = fromBuilding.PosX + 15,

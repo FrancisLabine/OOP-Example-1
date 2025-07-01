@@ -1,15 +1,13 @@
-﻿using SimulationApp.Core.Models.Domain.Components;
-using System;
+﻿using System;
 using System.Linq;
+using SimulationApp.Core.Models.Domain.Components;
 
 namespace SimulationApp.Core.Models.Domain.Buildings.Plants
 {
     internal class AssemblyPlant : PlantBase
     {
-        private ProductionType Input1 { get; set; }
-
-        private ProductionType Input2 { get; set; }
-
+        // private ProductionType Input1 { get; set; }
+        // private ProductionType Input2 { get; set; }
         public AssemblyPlant(string pId, int pPosX, int pPosY, BuildingMetadata pBuildingMetadata)
             : base(pId, pPosX, pPosY, pBuildingMetadata)
         {
@@ -18,8 +16,8 @@ namespace SimulationApp.Core.Models.Domain.Buildings.Plants
 
         protected override void InitializeFactory()
         {
-            Input1 = Enum.Parse<ProductionType>(BuildingMetadata.Input1.ToUpper(System.Globalization.CultureInfo.CurrentCulture));
-            Input2 = Enum.Parse<ProductionType>(BuildingMetadata.Input2.ToUpper(System.Globalization.CultureInfo.CurrentCulture));
+            // Input1 = Enum.Parse<ProductionType>(BuildingMetadata.Input1.ToUpper(System.Globalization.CultureInfo.CurrentCulture));
+            // Input2 = Enum.Parse<ProductionType>(BuildingMetadata.Input2.ToUpper(System.Globalization.CultureInfo.CurrentCulture));
             ProductionType = Enum.Parse<ProductionType>(BuildingMetadata.Output.ToUpper(System.Globalization.CultureInfo.CurrentCulture));
         }
 
@@ -37,7 +35,7 @@ namespace SimulationApp.Core.Models.Domain.Buildings.Plants
                 {
                     if (Inventory[i].GetType() == group.Key)
                     {
-                        var item = Inventory[i];   
+                        var item = Inventory[i];
                         Inventory.RemoveAt(i);
                         item = null;
                         removed++;

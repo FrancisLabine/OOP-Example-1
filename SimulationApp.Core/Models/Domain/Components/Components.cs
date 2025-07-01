@@ -1,11 +1,8 @@
-// <copyright file="Components.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
-// </copyright>
+using System;
+using System.Diagnostics;
+using SimulationApp.Core.Models.Domain.Buildings;
 
 namespace SimulationApp.Core.Models.Domain.Components {
-    using System;
-    using System.Diagnostics;
-    using SimulationApp.Core.Models.Domain.Buildings;
 
     /// <summary>
     /// A component represents an object produced and consumed by buildings.

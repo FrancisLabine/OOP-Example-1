@@ -1,7 +1,7 @@
-namespace SimulationApp.Core.Models.Utils {
-    using SimulationApp.Core.Models.Domain;
-    using SimulationApp.Core.Models.Utils.Xml;
+using SimulationApp.Core.Models.Domain;
+using SimulationApp.Core.Models.Utils.Xml;
 
+namespace SimulationApp.Core.Models.Utils {
     public class EnvironmentLoader {
         private readonly IXmlReader xmlReader;
 

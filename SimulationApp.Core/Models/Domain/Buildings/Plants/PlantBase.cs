@@ -5,8 +5,8 @@ namespace SimulationApp.Core.Models.Domain.Buildings.Plants {
 
         public int ProductionTime { get; set; } = -1;
 
-        protected PlantBase(string pId, int pPosX, int pPosY, BuildingMetadata pBuildingMetadata)
-            : base(pId, pPosX, pPosY, pBuildingMetadata)
+        protected PlantBase(string id, int posX, int posY, BuildingMetadata buildingMetadata)
+            : base(id, posX, posY, buildingMetadata)
         {
         }
 

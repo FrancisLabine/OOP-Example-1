@@ -1,58 +1,43 @@
-// <copyright file="XmlReaderService.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
-// </copyright>
+using System;
+using System.IO;
+using System.Xml;
 
-namespace SimulationApp.Core.Models.Utils.Xml
-{
-    using System;
-    using System.IO;
-    using System.Xml;
+namespace SimulationApp.Core.Models.Utils.Xml {
 
     /// <summary>
     /// Reads and parses the selected XML configuration file.
     /// </summary>
-    public class XmlReaderService : IXmlReader
-    {
+    public class XmlReaderService : IXmlReader {
         private readonly string configPath;
         private XmlDocument document;
 
-        public XmlReaderService(string configPath)
-        {
-            if (!File.Exists(configPath))
-            {
+        public XmlReaderService(string configPath) {
+            if (!File.Exists(configPath)) {
                 throw new FileNotFoundException($"Configuration file not found: {configPath}");
             }
 
             this.configPath = configPath;
         }
 
-        public XmlNodeList GetNodesByTag(string tagName)
-        {
+        public XmlNodeList GetNodesByTag(string tagName) {
             EnsureDocumentLoaded();
             document!.DocumentElement!.Normalize();
             return document.GetElementsByTagName(tagName);
         }
 
-        private void EnsureDocumentLoaded()
-        {
-            if (document != null)
-            {
+        private void EnsureDocumentLoaded() {
+            if (document != null) {
                 return;
             }
 
-            try
-            {
+            try {
                 var doc = new XmlDocument();
                 doc.Load(configPath);
                 document = doc;
-            }
-            catch (XmlException ex)
-            {
+            } catch (XmlException ex) {
                 Console.Error.WriteLine($"XML parsing error: {ex.Message}");
                 throw;
-            }
-            catch (Exception ex)
-            {
+            } catch (Exception ex) {
                 Console.Error.WriteLine($"Unexpected error: {ex.Message}");
                 throw;
             }

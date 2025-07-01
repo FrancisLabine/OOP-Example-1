@@ -21,7 +21,7 @@ namespace SimulationApp.Core.Controllers {
         public Task RunCycleAsync() {
             try {
                 if (loopTask is { IsCompleted: false }) {
-                    return loopTask; // already running
+                    return loopTask;
                 }
 
                 cts = new CancellationTokenSource();
@@ -45,10 +45,9 @@ namespace SimulationApp.Core.Controllers {
                 cts.Cancel();
                 try {
                     if (loopTask != null) {
-                        await loopTask.ConfigureAwait(false); // wait for clean shutdown
+                        await loopTask.ConfigureAwait(false);
                     }
                 } catch (OperationCanceledException) {
-                    // Expected on cancel
                 } finally {
                     cts.Dispose();
                     cts = null;

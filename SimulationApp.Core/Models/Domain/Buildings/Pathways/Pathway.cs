@@ -1,7 +1,3 @@
-// <copyright file="Pathway.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
-// </copyright>
-
 namespace SimulationApp.Core.Models.Domain.Buildings.Pathways
 {
     /// <summary>

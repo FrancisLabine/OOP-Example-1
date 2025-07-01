@@ -29,7 +29,7 @@ namespace SimulationApp.Core.Models {
                 if (cycles > 2500) {
                     Debug.WriteLine("Garbage collection triggered after 2000 cycles.");
                     System.GC.Collect();
-                    cycles = 0; // reset cycle count after garbage collection
+                    cycles = 0;
                 }
 
                 cycles++;

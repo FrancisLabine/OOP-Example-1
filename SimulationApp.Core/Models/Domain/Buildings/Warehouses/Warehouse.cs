@@ -1,16 +1,14 @@
-namespace SimulationApp.Core.Models.Domain.Buildings.Warehouses {
-    using SimulationApp.Core.Models.Domain.Buildings;
-    using SimulationApp.Core.Models.Domain.Components;
-    using SimulationApp.Core.Models.Domain.Interfaces;
-    using System;
-    using System.Collections.Generic;
+using System;
+using System.Collections.Generic;
+using SimulationApp.Core.Models.Domain.Components;
+using SimulationApp.Core.Models.Domain.Interfaces;
 
+namespace SimulationApp.Core.Models.Domain.Buildings.Warehouses {
     /// <summary>
     /// A warehouse is the final node in the production chain.
     /// It does not produce components but manages inventory and selling logic.
     /// </summary>
     public class Warehouse : BuildingBase {
-
         public ISellingStrategy SellingStrategy { get; set; }
 
         public Warehouse(string id, int x, int y, BuildingMetadata metadata)

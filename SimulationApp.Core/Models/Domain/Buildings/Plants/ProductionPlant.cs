@@ -5,11 +5,9 @@ namespace SimulationApp.Core.Models.Domain.Buildings.Plants
 {
     internal class ProductionPlant : PlantBase
     {
-
-        public ProductionPlant(string pId, int pPosX, int pPosY, BuildingMetadata pBuildingMetadata)
-            : base(pId, pPosX, pPosY, pBuildingMetadata)
+        public ProductionPlant(string id, int posX, int posY, BuildingMetadata buildingMetadata)
+            : base(id, posX, posY, buildingMetadata)
         {
-
             InitializeFactory();
         }
 
@@ -31,6 +29,7 @@ namespace SimulationApp.Core.Models.Domain.Buildings.Plants
             {
                 return true;
             }
+
             return false;
         }
 
@@ -51,6 +50,7 @@ namespace SimulationApp.Core.Models.Domain.Buildings.Plants
                 Build();
                 ProductionTime = -1;
             }
+
             for (int i = 0; i < Transport.Count; i++) {
                 Transport[i].ExecuteRoutine();
             }

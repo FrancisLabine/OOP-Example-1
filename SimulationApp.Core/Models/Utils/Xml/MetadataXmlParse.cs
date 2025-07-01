@@ -1,12 +1,8 @@
-// <copyright file="MetadataXmlParse.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
-// </copyright>
+using System.Collections.Generic;
+using System.Xml;
+using SimulationApp.Core.Models.Domain.Buildings;
 
 namespace SimulationApp.Core.Models.Utils.Xml {
-    using System.Collections.Generic;
-    using System.Xml;
-    using SimulationApp.Core.Models.Domain.Buildings;
-
     public static class MetadataXmlParser
     {
         public static List<BuildingMetadata> Parse(XmlNodeList metadataNodes)
@@ -15,16 +11,17 @@ namespace SimulationApp.Core.Models.Utils.Xml {
 
             foreach (XmlNode node in metadataNodes) {
                 foreach (XmlNode child in node.ChildNodes) {
-                    if (child.Name != "usine")
+                    if (child.Name != "usine") {
                         continue;
+                    }
 
                     var element = (XmlElement)child;
                     var type = element.GetAttribute("type");
 
-                    if (string.IsNullOrWhiteSpace(type) || result.Exists(md => md.Type == type))
+                    if (string.IsNullOrWhiteSpace(type) || result.Exists(md => md.Type == type)) {
                         continue;
+                    }
 
-                    // temp variables
                     string input1 = null, input2 = null;
                     int? qty1 = null, qty2 = null;
                     string output = null;
@@ -70,7 +67,6 @@ namespace SimulationApp.Core.Models.Utils.Xml {
                         }
                     }
 
-                    // Create the immutable record using object initializer (with init-only props)
                     var metadata = new BuildingMetadata {
                         Type = type,
                         Input1 = input1,
@@ -82,7 +78,7 @@ namespace SimulationApp.Core.Models.Utils.Xml {
                         IconEmpty = iconEmpty,
                         IconLow = iconLow,
                         IconMedium = iconMedium,
-                        IconFull = iconFull
+                        IconFull = iconFull,
                     };
 
                     result.Add(metadata);

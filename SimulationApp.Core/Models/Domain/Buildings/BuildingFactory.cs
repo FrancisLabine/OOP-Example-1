@@ -1,5 +1,4 @@
-﻿using SimulationApp.Core.Models.Domain.Buildings;
-using SimulationApp.Core.Models.Domain.Buildings.Plants;
+﻿using SimulationApp.Core.Models.Domain.Buildings.Plants;
 using SimulationApp.Core.Models.Domain.Buildings.Warehouses;
 
 namespace SimulationApp.Core.Models.Domain.Buildings {
