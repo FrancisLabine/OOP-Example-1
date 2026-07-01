@@ -10,7 +10,7 @@ This repository is intended to demonstrate object-oriented design fundamentals i
 SimulationApp.Core    Domain model, simulation loop, XML loading, strategies
 SimulationApp.UI      WPF application and rendering layer
 SimulationApp.Tests   NUnit tests for XML loading and simulation behavior
-Doc                   UML and architecture documentation
+.github/workflows     GitHub Actions CI workflow
 ```
 
 ## Architecture
@@ -47,6 +47,10 @@ In Visual Studio, open `OOP-Example-1.sln`, set `SimulationApp.UI` as the startu
 dotnet test SimulationApp.Tests\SimulationApp.Tests.csproj
 ```
 
+## Continuous Integration
+
+GitHub Actions runs restore, build, and tests on every push or pull request to `main`.
+
 ## Current Test Coverage
 
 The test suite verifies:
@@ -63,4 +67,3 @@ The test suite verifies:
 - Add more deterministic strategy tests.
 - Add a richer UI control model for pause/resume/reset.
 - Replace XML with a versioned configuration format if the simulation grows.
-- Add CI to build and test the solution on every push.
