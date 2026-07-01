@@ -1,5 +1,4 @@
-
-namespace SimulationApp.Core.Models.Domain.Shared {
+namespace SimulationApp.Core.Models.Domain.Interfaces {
     /// <summary>
     /// Observer interface for receiving production control notifications.
     /// </summary>

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using SimulationApp.Core.Models.Domain.Components;
-using SimulationApp.Core.Models.Domain.Shared;
+using SimulationApp.Core.Models.Domain.Interfaces;
 
 namespace SimulationApp.Core.Models.Domain.Buildings {
     /// <summary>
@@ -9,11 +9,11 @@ namespace SimulationApp.Core.Models.Domain.Buildings {
     /// Implements the Observer pattern.
     /// </summary>
     public abstract class BuildingBase : IObserver {
-        public List<BuildingBase> Observers { get; private set; } = [];
+        public List<BuildingBase> Observers { get; } = [];
 
-        public List<Component> Inventory { get; private set; } = [];
+        public List<Component> Inventory { get; } = [];
 
-        public List<Component> Transport { get; private set; } = [];
+        public List<Component> Transport { get; } = [];
 
         public int PosX { get; private set; }
 
@@ -21,11 +21,11 @@ namespace SimulationApp.Core.Models.Domain.Buildings {
 
         public string Id { get; private set; }
 
-        public BuildingBase LinkedBuilding { get; set; }
+        public BuildingBase? LinkedBuilding { get; set; }
 
-        public BuildingMetadata BuildingMetadata { get; private set; }
+        public BuildingMetadata BuildingMetadata { get; }
 
-        public abstract string GetStatusIcon();
+        public abstract BuildingStatus GetStatus();
 
         public abstract void ExecuteRoutine();
 
@@ -33,10 +33,10 @@ namespace SimulationApp.Core.Models.Domain.Buildings {
 
         public abstract void NotifyStop();
 
-        protected BuildingBase(string pId, int pPosX, int pPosY, BuildingMetadata pBuildingMetadata) {
-            Id = pId ?? throw new ArgumentNullException(nameof(pId));
-            PosX = pPosX;
-            PosY = pPosY;
+        protected BuildingBase(string id, int posX, int posY, BuildingMetadata pBuildingMetadata) {
+            Id = id ?? throw new ArgumentNullException(nameof(id));
+            PosX = posX;
+            PosY = posY;
             BuildingMetadata = pBuildingMetadata;
         }
     }

@@ -1,65 +1,66 @@
-# OOP-Example-1
+# Production Chain Simulation
 
+A WPF/.NET simulation of a configurable production chain. The project models raw material plants, production plants, assembly plants, warehouses, transport between buildings, and warehouse selling strategies.
 
-## Overview
-The simulation represents an environment where different types of buildings interact to simulate a production chain. These buildings include:
-- **Raw Material Plants**
-- **Production Plants**
-- **Assembly Plants**
-- **Warehouses**
-- **Pathways for movement**
-- **Components representing items in transit**
+This repository is intended to demonstrate object-oriented design fundamentals in a small but structured application: inheritance, polymorphism, interfaces, factories, strategies, observer-style notifications, XML configuration, and automated tests.
 
-Each building has its own responsibilities and behavior, and the system uses polymorphism, inheritance, and abstraction to enable flexible simulation logic.
+## Project Structure
 
+```text
+SimulationApp.Core    Domain model, simulation loop, XML loading, strategies
+SimulationApp.UI      WPF application and rendering layer
+SimulationApp.Tests   NUnit tests for XML loading and simulation behavior
+Doc                   UML and architecture documentation
+```
 
-## Key Concepts
+## Architecture
 
-### OOP Principles and Programming Best Practices
-- **Abstraction**: Buildings and components are abstracted into classes with specific responsibilities.
-- **Encapsulation**: Each building encapsulates its own state and behavior, allowing for clear interfaces.
-- **Inheritance**: Common functionality is shared through base classes, allowing for code reuse.
-- **Polymorphism**: Buildings can be treated as their base type, allowing for flexible interactions.
-- **Composition**: Buildings can contain other buildings or components, allowing for complex structures.
-- **Interfaces**: Used to define contracts for behaviors (e.g., IObserver, ISellingStrategy).
-- **Dependency Injection**: Used to inject dependencies like selling strategies into warehouses, promoting loose coupling.
-- **Single Responsibility Principle**: Each class has a single responsibility, making the code easier to maintain and extend.
-- **High Cohesion**: Classes are designed to have closely related functionalities, making them easier to understand and maintain.
-- **Low Coupling**: Classes interact through well-defined interfaces, reducing dependencies and making the system more modular.
+The solution is split into three projects:
 
-### Design Patterns
-- **Template Method Pattern**: Used in buildings to define a skeleton of the production process, allowing subclasses to implement specific steps.
-- **Factory Pattern**: Used to create different types of buildings and components dynamically.
-- **Observer Pattern**: Buildings can observe changes in production and react accordingly.
-- **Strategy Pattern**: Warehouses can use different selling strategies to manage how they sell components.
+- `SimulationApp.Core` contains the simulation model and business rules. It has no dependency on WPF.
+- `SimulationApp.UI` renders the simulation and maps domain state to visual assets.
+- `SimulationApp.Tests` verifies configuration loading and core simulation behavior.
 
-### Building Hierarchy
-- **BuildingBase**: Abstract base class for all buildings.
-- **PlantBase**: Extends BuildingBase, adds production-related logic.
-- **RawMatPlant**, **ProductionPlant**, **AssemblyPlant**: Specific plant types implementing factory logic.
-- **Warehouse**: Stores and sells produced components using a pluggable strategy.
+The simulation is loaded from XML configuration files. Metadata defines building types, inputs, outputs, production intervals, and UI asset paths. The simulation section defines building instances and pathways between them.
 
-### Component Flow
-- **Component**: Represents a unit of production (e.g., metal, engine).
-- Components move between buildings and are processed based on their ProductionType.
+## OOP Concepts Demonstrated
 
-### Observer Pattern
--Buildings can observe and react to production events (e.g., notify start/stop).
--Implemented via the **IObserver** interface.
+- **Abstraction:** shared behavior is modeled through `BuildingBase` and `PlantBase`.
+- **Inheritance:** raw material, production, assembly, and warehouse buildings specialize common building behavior.
+- **Polymorphism:** the simulation loop executes buildings through the common `BuildingBase` contract.
+- **Factory Pattern:** XML building types are converted into domain objects by `BuildingFactory`.
+- **Strategy Pattern:** warehouses use interchangeable selling strategies.
+- **Observer-style notifications:** downstream buildings signal upstream buildings to start or stop production based on capacity.
+- **Separation of concerns:** the core model exposes simulation state while the UI handles rendering.
 
-### Strategies
-- **ISellingStrategy**: Interface for implementing different selling strategies (e.g., **BulkStrategy**, **RandomStrategy**).
-- Promotes open/closed principle by allowing warehouses to behave differently based on strategy.
+## Running the Application
 
-### Architectural Patterns
-- **Layered Architecture**: The system is organized into layers (e.g., data layer, business logic layer) to separate concerns.
-- **Event-Driven Architecture**: Buildings can react to events in the system, allowing for dynamic interactions.
-- **MVVM (Model-View-ViewModel)**: The simulation can be extended to use MVVM for UI interactions, separating the view logic from the business logic.
+```powershell
+dotnet run --project SimulationApp.UI\SimulationApp.UI.csproj
+```
 
-### Documentation
- All UML diagrams and architecture decisions are in the [Doc](https://github.com/FrancisLabine/OOP-Example-1/tree/main/Doc) folder.
+In Visual Studio, open `OOP-Example-1.sln`, set `SimulationApp.UI` as the startup project, and run.
 
-### Future Improvements
-- Implement more selling strategies or production rules
-- Add more building types, component types, pathways, and interactions
-- Add weight and size attributes to components for more realistic simulation
+## Running Tests
+
+```powershell
+dotnet test SimulationApp.Tests\SimulationApp.Tests.csproj
+```
+
+## Current Test Coverage
+
+The test suite verifies:
+
+- XML metadata and building parsing
+- Path loading and building links
+- Warehouse status behavior
+- Upstream production signaling
+- Raw material production
+- Component delivery from transport to inventory
+
+## Future Improvements
+
+- Add more deterministic strategy tests.
+- Add a richer UI control model for pause/resume/reset.
+- Replace XML with a versioned configuration format if the simulation grows.
+- Add CI to build and test the solution on every push.

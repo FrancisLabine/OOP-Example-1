@@ -15,7 +15,7 @@ namespace SimulationApp.Core.Controllers {
             Loop = new SimulationLoop(loader.Load());
         }
 
-        private CancellationTokenSource cts;
+        private CancellationTokenSource? cts;
         private Task? loopTask;
 
         public Task RunCycleAsync() {

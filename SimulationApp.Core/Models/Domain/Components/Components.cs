@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics;
 using SimulationApp.Core.Models.Domain.Buildings;
 
 namespace SimulationApp.Core.Models.Domain.Components {
@@ -41,25 +40,30 @@ namespace SimulationApp.Core.Models.Domain.Components {
         /// </summary>
         public void ExecuteRoutine() {
             Move();
-            if (X == Destination.PosX && Y == Destination.PosY) {
-                try {
-                    Component comp = new Component(Type, Destination, Source);
-                    Destination.Inventory.Add(comp);
-                    Destination.Transport.Remove(this);
-                } catch (Exception ex) {
-                    Debug.WriteLine($"ERROR during transport removal: {ex.Message}");
-                    Debug.WriteLine(ex.StackTrace);
-                }
+            if (HasArrived()) {
+                Destination.Inventory.Add(this);
+                Destination.Transport.Remove(this);
             }
         }
 
         private void Move() {
             float dx = Destination.PosX - X;
             float dy = Destination.PosY - Y;
-            float ratio = Math.Abs(dx) > 0.01f ? Math.Abs(dy / dx) : 1f;
+            float distance = MathF.Sqrt((dx * dx) + (dy * dy));
 
-            X += dx > 0 ? Speed : dx < 0 ? -Speed : 0;
-            Y += dy > 0 ? ratio * Speed : dy < 0 ? -ratio * Speed : 0;
+            if (distance <= Speed) {
+                X = Destination.PosX;
+                Y = Destination.PosY;
+                return;
+            }
+
+            X += dx / distance * Speed;
+            Y += dy / distance * Speed;
+        }
+
+        private bool HasArrived() {
+            return Math.Abs(X - Destination.PosX) < 0.001f
+                && Math.Abs(Y - Destination.PosY) < 0.001f;
         }
     }
 }

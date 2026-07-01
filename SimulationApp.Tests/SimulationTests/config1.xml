@@ -2,10 +2,10 @@
   <metadonnees>
     <usine type="entrepot">
       <icones>
-        <icone type="vide" path="./src/Ressources/UT0_.png" />
-        <icone type="un-tiers" path="./src/Ressources/UT33_.png" />
-        <icone type="deux-tiers" path="./src/Ressources/UT66_.png" />
-        <icone type="plein" path="./src/Ressources/UT100_.png" />
+        <icone type="vide" path="./src/Resources/UT0_.png" />
+        <icone type="un-tiers" path="./src/Resources/UT33_.png" />
+        <icone type="deux-tiers" path="./src/Resources/UT66_.png" />
+        <icone type="plein" path="./src/Resources/UT100_.png" />
       </icones>
       <entree type="avion" quantite="3" />
       <sortie type="none" />
@@ -13,10 +13,10 @@
     </usine>
      <usine type="entrepot">
       <icones>
-        <icone type="vide" path="./src/Ressources/UT0_.png" />
-        <icone type="un-tiers" path="./Ressources/UT33_.png" />
-        <icone type="deux-tiers" path="./Ressources/UT66_.png" />
-        <icone type="plein" path="./Ressources/UT100_.png" />
+        <icone type="vide" path="./src/Resources/UT0_.png" />
+        <icone type="un-tiers" path="./Resources/UT33_.png" />
+        <icone type="deux-tiers" path="./Resources/UT66_.png" />
+        <icone type="plein" path="./Resources/UT100_.png" />
       </icones>
       <entree type="avion" quantite="3" />
       <sortie type="none" />

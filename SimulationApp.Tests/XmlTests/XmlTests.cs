@@ -14,11 +14,9 @@ namespace SimulationApp.XmlTests {
 
     [TestFixture]
     public class XmlTests {
-        private string configPath;
-
         [Test]
         public void ShouldLoadWarehouseFromXmlCorrectly() {
-            configPath = Path.Combine(AppContext.BaseDirectory, "../../../SimulationApp.Tests/XmlTests/config_WH.xml");
+            var configPath = Path.Combine(AppContext.BaseDirectory, "XmlTests/config_WH.xml");
             // Step 1: Create the XML reader
             var reader = new XmlReaderService(configPath);
 
@@ -45,7 +43,7 @@ namespace SimulationApp.XmlTests {
 
         [Test]
         public void ShouldLoadRawMatFactoryFromXmlCorrectly() {
-            configPath = Path.Combine(AppContext.BaseDirectory, "../../../SimulationApp.Tests/XmlTests/config_RawMatFac.xml");
+            var configPath = Path.Combine(AppContext.BaseDirectory, "XmlTests/config_RawMatFac.xml");
 
             // Step 1: Create the XML reader
             var reader = new XmlReaderService(configPath);
@@ -73,7 +71,7 @@ namespace SimulationApp.XmlTests {
 
         [Test]
         public void ShouldLoadEverything() {
-            configPath = Path.Combine(AppContext.BaseDirectory, "../../../SimulationApp.Tests/XmlTests/config_All.xml");
+            var configPath = Path.Combine(AppContext.BaseDirectory, "XmlTests/config_All.xml");
 
             // Step 1: Create the XML reader
             var reader = new XmlReaderService(configPath);

@@ -1,8 +1,8 @@
 namespace SimulationApp {
     using System;
+    using System.Collections.Generic;
     using System.IO;
     using System.Linq;
-    using System.Xml;
     using NUnit.Framework;
     using SimulationApp.Core.Models.Domain.Buildings;
     using SimulationApp.Core.Models.Domain.Buildings.Plants;
@@ -11,84 +11,66 @@ namespace SimulationApp {
     using SimulationApp.Core.Models.Utils.Xml;
 
     [TestFixture]
-    public class WarehouseTests
-    {
-        private string configPath;
-
+    public class WarehouseTests {
         [Test]
-        public void ShouldReturnWarehouseIcons()
-        {
-            configPath = Path.Combine(AppContext.BaseDirectory, "../../../SimulationApp.Tests/SimulationTests/config1.xml");
+        public void WarehouseStartsEmpty() {
+            var buildingList = LoadBuildings("SimulationTests/config1.xml");
 
-            var reader = new XmlReaderService(configPath);
+            var warehouse = buildingList.OfType<Warehouse>().First();
 
-            XmlNodeList metadataNodes = reader.GetNodesByTag("metadonnees");
-            var metadataList = MetadataXmlParser.Parse(metadataNodes);
-
-            XmlNodeList simulationNodes = reader.GetNodesByTag("simulation");
-            var buildingList = BuildingXmlParser.Parse(simulationNodes, metadataList);
-
-            var warehouse1 = buildingList.OfType<Warehouse>().ToList()[0];
-            var warehouse2 = buildingList.OfType<Warehouse>().ToList()[1];
-
-            var iconEmpty = warehouse1.GetStatusIcon();
-            Assert.That(iconEmpty, Is.EqualTo("./src/Ressources/UT0_.png"), "Expecting ./src/Ressources/UT0_.png (Warehouse Empty)");
-
-            //warehouse1.ReceiveComponent(new Component(ProductionType.AVION, warehouse1, warehouse2));
-            //iconEmpty = warehouse1.GetStatusIcon();
-
-            //Assert.That(iconEmpty, Is.EqualTo("./src/Ressources/UT33_.png"), "Expecting ./src/Ressources/UT1_.png (Warehouse Low)");
-
-            //warehouse1.ReceiveComponent(new Component(ProductionType.AVION, warehouse1, warehouse2));
-            //iconEmpty = warehouse1.GetStatusIcon();
-            //Assert.That(iconEmpty, Is.EqualTo("./src/Ressources/UT66_.png"), "Expecting ./src/Ressources/UT2_.png (Warehouse Medium)");
-
-            //warehouse1.ReceiveComponent(new Component(ProductionType.AVION, warehouse1, warehouse2));
-            //iconEmpty = warehouse1.GetStatusIcon();
-            //Assert.That(iconEmpty, Is.EqualTo("./src/Ressources/UT100_.png"), "Expecting ./src/Ressources/UT3_.png (Warehouse Full)");
+            Assert.That(warehouse.GetStatus(), Is.EqualTo(BuildingStatus.Empty));
         }
 
         [Test]
-        public void ShouldLoadRawMatFactoryFromXmlCorrectly()
-        {
-            configPath = Path.Combine(AppContext.BaseDirectory, "../../../SimulationApp.Tests/SimulationTests/config2.xml");
-
-            // Step 1: Create the XML reader
-            var reader = new XmlReaderService(configPath);
-
-            // Step 2: Load metadata
-            XmlNodeList metadataNodes = reader.GetNodesByTag("metadonnees");
-            var metadataList = MetadataXmlParser.Parse(metadataNodes);
-            Assert.That(metadataList.Count, Is.EqualTo(2), "Expected exactly 2 metadata entry.");
-
-            // Step 3: Load buildings
-            XmlNodeList simulationNodes = reader.GetNodesByTag("simulation");
-            var buildingList = BuildingXmlParser.Parse(simulationNodes, metadataList);
-            Assert.That(buildingList.Count, Is.EqualTo(2), "Expected exactly 2 building.");
-
-            // Load paths
-            var pathNodes = reader.GetNodesByTag("chemin");
-            var paths = PathXmlParser.Parse(pathNodes, buildingList);
-
-            Assert.That(paths.ToList().Count, Is.EqualTo(1), "Expected exactly 1 path.");
-
-            var warehouse = buildingList.OfType<Warehouse>().FirstOrDefault();
-            var factory = buildingList.OfType<RawMatPlant>().FirstOrDefault();
-
-            Assert.That(factory.LinkedBuilding, Is.SameAs(warehouse), "Expected Factory to be linked to Warehouse.");
-            Assert.That(warehouse.Observers.ToList()[0], Is.SameAs(factory), "Expected Warehouse to observe Factory.");
-
-            Assert.That(warehouse.Transport.Count, Is.EqualTo(0), "Expected exactly 0 RawMat in transit.");
-            Assert.That(factory.ProductionTime, Is.EqualTo(-1), "Expected exactly -1 ProductionTime.");
-            var input = warehouse.BuildingMetadata.Input1;
-            var maxCapacity = warehouse.BuildingMetadata.InputQuantity1 ?? 0;
-            var currentLoad = warehouse.Inventory.Count + warehouse.Transport.Count;
+        public void WarehouseSignalsRawMaterialPlantWhenCapacityIsAvailable() {
+            var buildingList = LoadBuildings("SimulationTests/config2.xml");
+            var warehouse = buildingList.OfType<Warehouse>().First();
+            var factory = buildingList.OfType<RawMatPlant>().First();
 
             warehouse.ExecuteRoutine();
 
-            Assert.That(factory.ProductionTime, Is.EqualTo(0), "Expected exactly 0 ProductionTime.");
+            Assert.That(factory.ProductionTime, Is.EqualTo(0));
+            Assert.That(factory.LinkedBuilding, Is.SameAs(warehouse));
+            Assert.That(warehouse.Observers, Does.Contain(factory));
+        }
+
+        [Test]
+        public void RawMaterialPlantProducesComponentAfterInterval() {
+            var buildingList = LoadBuildings("SimulationTests/config2.xml");
+            var warehouse = buildingList.OfType<Warehouse>().First();
+            var factory = buildingList.OfType<RawMatPlant>().First();
+
+            factory.NotifyStart();
             factory.ExecuteRoutine();
-            Assert.That(warehouse.Transport.Count, Is.EqualTo(1), "Expected exactly 1 RawMat in transit.");
+
+            Assert.That(warehouse.Transport, Has.Count.EqualTo(1));
+            Assert.That(warehouse.Transport[0].Type, Is.EqualTo(ProductionType.METAL));
+        }
+
+        [Test]
+        public void ComponentDeliveryMovesItemFromTransportToInventory() {
+            var buildingList = LoadBuildings("SimulationTests/config2.xml");
+            var warehouse = buildingList.OfType<Warehouse>().First();
+            var factory = buildingList.OfType<RawMatPlant>().First();
+            var component = new Component(ProductionType.METAL, warehouse, factory);
+            warehouse.Transport.Add(component);
+
+            for (var i = 0; i < 500 && warehouse.Transport.Count > 0; i++) {
+                component.ExecuteRoutine();
+            }
+
+            Assert.That(warehouse.Transport, Is.Empty);
+            Assert.That(warehouse.Inventory, Has.Count.EqualTo(1));
+            Assert.That(warehouse.Inventory[0], Is.SameAs(component));
+        }
+
+        private static List<BuildingBase> LoadBuildings(string relativeConfigPath) {
+            var configPath = Path.Combine(AppContext.BaseDirectory, relativeConfigPath);
+            var reader = new XmlReaderService(configPath);
+            var metadataList = MetadataXmlParser.Parse(reader.GetNodesByTag("metadonnees"));
+            var buildingList = BuildingXmlParser.Parse(reader.GetNodesByTag("simulation"), metadataList);
+            PathXmlParser.Parse(reader.GetNodesByTag("chemin"), buildingList);
+            return buildingList;
         }
     }
 }

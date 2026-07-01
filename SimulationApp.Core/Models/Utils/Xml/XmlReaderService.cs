@@ -9,7 +9,7 @@ namespace SimulationApp.Core.Models.Utils.Xml {
     /// </summary>
     public class XmlReaderService : IXmlReader {
         private readonly string configPath;
-        private XmlDocument document;
+        private XmlDocument? document;
 
         public XmlReaderService(string configPath) {
             if (!File.Exists(configPath)) {
@@ -21,7 +21,7 @@ namespace SimulationApp.Core.Models.Utils.Xml {
 
         public XmlNodeList GetNodesByTag(string tagName) {
             EnsureDocumentLoaded();
-            document!.DocumentElement!.Normalize();
+            document!.DocumentElement?.Normalize();
             return document.GetElementsByTagName(tagName);
         }
 

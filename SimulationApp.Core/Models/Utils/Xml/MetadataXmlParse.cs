@@ -22,11 +22,11 @@ namespace SimulationApp.Core.Models.Utils.Xml {
                         continue;
                     }
 
-                    string input1 = null, input2 = null;
+                    string? input1 = null, input2 = null;
                     int? qty1 = null, qty2 = null;
-                    string output = null;
+                    string? output = null;
                     int? interval = null;
-                    string iconEmpty = null, iconLow = null, iconMedium = null, iconFull = null;
+                    string iconEmpty = string.Empty, iconLow = string.Empty, iconMedium = string.Empty, iconFull = string.Empty;
 
                     foreach (XmlNode config in child.ChildNodes) {
                         switch (config.Name) {

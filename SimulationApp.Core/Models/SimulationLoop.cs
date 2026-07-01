@@ -1,20 +1,20 @@
-﻿using System;
+using System;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using SimulationApp.Core.Models.Domain;
-using System.Diagnostics;
 
 namespace SimulationApp.Core.Models {
     public class SimulationLoop {
-        public EnvironmentModel Model { get; private set; }
-
-        private const int DelayMillisesconds = 10;
-
-        public event Action OnCycleCompleted;
+        private const int DelayMilliseconds = 10;
 
         public SimulationLoop(EnvironmentModel model) {
             Model = model;
         }
+
+        public event Action? OnCycleCompleted;
+
+        public EnvironmentModel Model { get; }
 
         public async Task RunAsync(CancellationToken token) {
             var cycles = 0;
@@ -25,10 +25,10 @@ namespace SimulationApp.Core.Models {
 
                 OnCycleCompleted?.Invoke();
 
-                await Task.Delay(DelayMillisesconds, token).ConfigureAwait(false);
+                await Task.Delay(DelayMilliseconds, token).ConfigureAwait(false);
                 if (cycles > 2500) {
-                    Debug.WriteLine("Garbage collection triggered after 2000 cycles.");
-                    System.GC.Collect();
+                    Debug.WriteLine("Garbage collection triggered after 2500 cycles.");
+                    GC.Collect();
                     cycles = 0;
                 }
 
